@@ -1,0 +1,305 @@
+{
+    "users": [
+        {
+            "user_id": 1,
+            "name": "thanh",
+            "workspaces": [
+                {
+                    "workspace_id": 1,
+                    "workspace_name": "My Worksapce",
+                    "projects": [
+                        {
+                            "project_id": 1,
+                            "project_name": "To Do List",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 2,
+                            "project_name": "Quan Ly Sinh Vien",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 3,
+                            "project_name": "Product",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 4,
+                            "project_name": "Quan Ly CV",
+                            "project_status": 0
+                        }
+                    ],
+                    "members": [
+                        {
+                            "id": 1,
+                            "userName": "Thanh Do",
+                            "gmail": "dovanducthanh@gmail.com"
+                        },
+                        {
+                            "id": 2,
+                            "userName": "Thanh Do1",
+                            "gmail": "dovanducthanh1@gmail.com"
+                        },
+                        {
+                            "id": 3,
+                            "userName": "Thanh Do2",
+                            "gmail": "dovanducthanh2@gmail.com"
+                        }
+                    ]
+                },
+                {
+                    "workspace_id": 2,
+                    "workspace_name": "Team FE",
+                    "projects": [
+                        {
+                            "project_id": 5,
+                            "project_name": "Game",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 7,
+                            "project_name": "Tic Tac Toe",
+                            "project_status": 0
+                        }
+                    ],
+                    "members": [
+                        {
+                            "id": 1,
+                            "userName": "Thanh Do",
+                            "gmail": "dovanducthanh@gmail.com"
+                        },
+                        {
+                            "id": 2,
+                            "userName": "Thanh Do1",
+                            "gmail": "dovanducthanh1@gmail.com"
+                        },
+                        {
+                            "id": 3,
+                            "userName": "Thanh Do2",
+                            "gmail": "dovanducthanh2@gmail.com"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "user_id": 2,
+            "name": "tuan",
+            "workspaces": [
+                {
+                    "workspace_id": 3,
+                    "workspace_name": "Job Worksapce",
+                    "projects": [
+                        {
+                            "project_id": 8,
+                            "project_name": "Tin Tuc",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 9,
+                            "project_name": "Shoppee",
+                            "project_status": 0
+                        }
+                    ],
+                    "members": [
+                        {
+                            "id": 1,
+                            "userName": "Thanh Do",
+                            "gmail": "dovanducthanh@gmail.com"
+                        },
+                        {
+                            "id": 2,
+                            "userName": "Thanh Do1",
+                            "gmail": "dovanducthanh1@gmail.com"
+                        },
+                        {
+                            "id": 3,
+                            "userName": "Thanh Do2",
+                            "gmail": "dovanducthanh2@gmail.com"
+                        }
+                    ]
+                },
+                {
+                    "workspace_id": 4,
+                    "workspace_name": "Team BE",
+                    "projects": [
+                        {
+                            "project_id": 10,
+                            "project_name": "Lazada",
+                            "project_status": 0
+                        },
+                        {
+                            "project_id": 11,
+                            "project_name": "Amazon",
+                            "project_status": 0
+                        }
+                    ],
+                    "members": [
+                        {
+                            "id": 1,
+                            "userName": "Thanh Do",
+                            "gmail": "dovanducthanh@gmail.com"
+                        },
+                        {
+                            "id": 2,
+                            "userName": "Thanh Do1",
+                            "gmail": "dovanducthanh1@gmail.com"
+                        },
+                        {
+                            "id": 3,
+                            "userName": "Thanh Do2",
+                            "gmail": "dovanducthanh2@gmail.com"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+
+
+
+    "Workspaces": [
+        {
+            "workspace_id": 1,
+            "workspace_name": "My Worksapce",
+            "projects": [
+                {
+                    "project_id": 1,
+                    "project_name": "To Do List",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 2,
+                    "project_name": "Quan Ly Sinh Vien",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 3,
+                    "project_name": "Product",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 4,
+                    "project_name": "Quan Ly CV",
+                    "project_status": 0
+                }
+            ],
+            "members": [
+                {
+                    "id": 1,
+                    "userName": "Thanh Do",
+                    "gmail": "dovanducthanh@gmail.com"
+                },
+                {
+                    "id": 2,
+                    "userName": "Thanh Do1",
+                    "gmail": "dovanducthanh1@gmail.com"
+                },
+                {
+                    "id": 3,
+                    "userName": "Thanh Do2",
+                    "gmail": "dovanducthanh2@gmail.com"
+                }
+            ]
+        },
+        {
+            "workspace_id": 2,
+            "workspace_name": "Team FE",
+            "projects": [
+                {
+                    "project_id": 5,
+                    "project_name": "Game",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 7,
+                    "project_name": "Tic Tac Toe",
+                    "project_status": 0
+                }
+            ],
+            "members": [
+                {
+                    "id": 1,
+                    "userName": "Thanh Do",
+                    "gmail": "dovanducthanh@gmail.com"
+                },
+                {
+                    "id": 2,
+                    "userName": "Thanh Do1",
+                    "gmail": "dovanducthanh1@gmail.com"
+                },
+                {
+                    "id": 3,
+                    "userName": "Thanh Do2",
+                    "gmail": "dovanducthanh2@gmail.com"
+                }
+            ]
+        },
+        {
+            "workspace_id": 3,
+            "workspace_name": "Job Worksapce",
+            "projects": [
+                {
+                    "project_id": 8,
+                    "project_name": "Tin Tuc",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 9,
+                    "project_name": "Shoppee",
+                    "project_status": 0
+                }
+            ],
+            "members": [
+                {
+                    "id": 1,
+                    "userName": "Thanh Do",
+                    "gmail": "dovanducthanh@gmail.com"
+                },
+                {
+                    "id": 2,
+                    "userName": "Thanh Do1",
+                    "gmail": "dovanducthanh1@gmail.com"
+                },
+                {
+                    "id": 3,
+                    "userName": "Thanh Do2",
+                    "gmail": "dovanducthanh2@gmail.com"
+                }
+            ]
+        },
+        {
+            "workspace_id": 4,
+            "workspace_name": "Team BE",
+            "projects": [
+                {
+                    "project_id": 10,
+                    "project_name": "Lazada",
+                    "project_status": 0
+                },
+                {
+                    "project_id": 11,
+                    "project_name": "Amazon",
+                    "project_status": 0
+                }
+            ],
+            "members": [
+                {
+                    "id": 1,
+                    "userName": "Thanh Do",
+                    "gmail": "dovanducthanh@gmail.com"
+                },
+                {
+                    "id": 2,
+                    "userName": "Thanh Do1",
+                    "gmail": "dovanducthanh1@gmail.com"
+                },
+                {
+                    "id": 3,
+                    "userName": "Thanh Do2",
+                    "gmail": "dovanducthanh2@gmail.com"
+                }
+            ]
+        }
+    ]
+}
