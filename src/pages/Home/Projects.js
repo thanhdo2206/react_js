@@ -4,10 +4,13 @@ import Grid from '@mui/material/Grid';
 import { NavLink } from 'react-router-dom';
 import { BoxHover } from './BoxHover';
 import { useSelector, useDispatch } from 'react-redux';
-
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const styles = {
-	borderBox: { border: '1px solid #ccc', borderRadius: '10px' },
+	borderBox: {
+		border: '1px solid #ccc',
+		borderRadius: '10px',
+	},
 
 	navLink: {
 		textDecoration: 'none',
@@ -22,8 +25,9 @@ const styles = {
 		marginRight: '10px',
 	},
 
-	cssComplete: {
-		color: 'green',
+	cssArchived: {
+		color: '#6d6e6f',
+		fontSize: '14px',
 	},
 };
 
@@ -35,9 +39,9 @@ export default function Projects() {
 	const { projects } = currentWorkSpace;
 	return (
 		<Box sx={styles.borderBox}>
-			<Box sx={{ padding: '24px' }}>
-				<h3>Projects</h3>
-				<Grid container rowSpacing={2} pt={3}>
+			<Box sx={{ padding: '20px' }}>
+				<h3 style={{ margin: '0px' }}>Projects</h3>
+				<Grid container spacing={2} rowSpacing={2} pt={3}>
 					{projects.map((project, index) => {
 						return (
 							<Grid item xs={6} key={project.project_name}>
@@ -49,7 +53,13 @@ export default function Projects() {
 											{project.project_status === 0 ? (
 												''
 											) : (
-												<p style={styles.cssComplete}>Complete</p>
+												<Box sx={{ display: 'flex', alignItems: 'center' }}>
+													<InventoryIcon
+														color='disabled'
+														sx={{ fontSize: '14px', marginRight: '5px' }}
+													></InventoryIcon>
+													<span style={styles.cssArchived}>Archived</span>
+												</Box>
 											)}
 										</Box>
 									</BoxHover>

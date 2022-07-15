@@ -5,9 +5,6 @@ import Divider from '@mui/material/Divider';
 import Projects from './Projects';
 import Members from './Members';
 
-
-
-
 const styles = {
 	textDate: {
 		textAlign: 'center',
@@ -57,22 +54,20 @@ export default function Home() {
 	const getMess = () => {
 		let day = new Date();
 		let hr = day.getHours();
-		let message ='';
+		let message = '';
 		if (hr >= 0 && hr < 12) {
 			message = 'Good Morning';
-		} 
-		
+		}
+
 		if (hr >= 12 && hr <= 17) {
 			message = 'Good Afternoon';
-		} 
-		if(hr > 17) {
-			message= 'Good Evening';
+		}
+		if (hr > 17) {
+			message = 'Good Evening';
 		}
 
 		return message;
 	};
-
-	
 
 	return (
 		<Box>

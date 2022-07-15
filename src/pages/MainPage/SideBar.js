@@ -11,11 +11,12 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
 import { NavLink } from 'react-router-dom';
-import { DrawerHeader } from './DrawerHeader';
-import { ListItemCustomize } from './List';
-import { IconButtonClose } from './IconButton';
+import { DrawerHeader } from '../../components/DrawerHeader/DrawerHeader';
+import { ListItemCustomize } from '../../components/List/List';
 import { ListItemText } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
 
 const styles = {
 	navLink: {
@@ -35,6 +36,12 @@ const styles = {
 		marginRight: '10px',
 		borderRadius: '2px',
 	},
+	iconBtnClose: {
+		color: '#fff',
+		'&:hover': {
+			backgroundColor: 'rgb(186 179 179 / 40%)',
+		},
+	},
 	btnCreateProject: {
 		fontSize: '12px',
 		padding: '6px',
@@ -42,9 +49,9 @@ const styles = {
 		marginLeft: '16px',
 		borderRadius: '4px',
 		cursor: 'pointer',
-    "&:hover":{
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    }
+		'&:hover': {
+			backgroundColor: 'rgba(255, 255, 255, 0.08)',
+		},
 	},
 };
 
@@ -82,10 +89,18 @@ export default function SideBar(props) {
 	];
 
 	const [selectedIndex, setSelectedIndex] = React.useState(0);
+	const location = useLocation();
 
 	const handleListItemClick = (event, index) => {
 		setSelectedIndex(index);
 	};
+
+	window.onload = event => {
+		const index = arrList.findIndex(item => item.href === location.pathname);
+		setSelectedIndex(index);
+	};
+
+	
 
 	return (
 		<Drawer
@@ -115,9 +130,9 @@ export default function SideBar(props) {
 					alt='Logo'
 					src='https://d3ki9tyy5l5ruj.cloudfront.net/obj/6622ad572b5223bcb1ad696eae8f988e5dd04631/Asana-Logo-Horizontal-Coral-White.svg'
 				/>
-				<IconButtonClose onClick={handleDrawerClose}>
+				<IconButton sx={styles.iconBtnClose} onClick={handleDrawerClose}>
 					<ChevronLeftIcon />
-				</IconButtonClose>
+				</IconButton>
 			</DrawerHeader>
 
 			<List>
@@ -159,11 +174,13 @@ export default function SideBar(props) {
 				))}
 			</List>
 
-			<Box>
-				<Typography component='span'  sx={styles.btnCreateProject}>
-					+ Create a Project
-				</Typography>
-			</Box>
+			<NavLink to="/new-project" style={styles.navLink}>
+				<Box>
+					<Typography component='span' sx={styles.btnCreateProject}>
+						+ Create a Project
+					</Typography>
+				</Box>
+			</NavLink>
 		</Drawer>
 	);
 }

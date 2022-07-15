@@ -2,11 +2,9 @@ import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { styled } from '@mui/material/styles';
-import MuiAppBar from '@mui/material/AppBar';
 import { Outlet } from 'react-router-dom';
-import { Main } from './Main';
-import { AppBar } from './AppBar';
+import { Main } from '../../components/Main/Main';
+import { AppBar } from '../../components/AppBar/AppBar';
 import { Box } from '@mui/system';
 import { Routes, Route } from 'react-router-dom';
 import HomeToolbar from './Toolbar/HomeToolbar';
@@ -38,7 +36,7 @@ export default function Content(props) {
 
 						<Routes>
 							<Route path='home'>
-								<Route path=':id' element={<HomeToolbar />} />
+								<Route path=':workspace_id' element={<HomeToolbar />} />
 							</Route>
 							<Route path='my-task' element={<MytaskToolbar />} />
 						</Routes>

@@ -23,7 +23,7 @@ export default function Members() {
 		<Box mt={3}>
 			{members.map((member, index) => {
 				return (
-					<BoxHover key={member.userName}>
+					<BoxHover key={member.userName} mb={2}>
 						<Box sx={styles.boxAvatar} borderRadius='50%'></Box>
 						<Box>
 							<p style={{ marginBottom: '6px' }}>{member.userName}</p>
