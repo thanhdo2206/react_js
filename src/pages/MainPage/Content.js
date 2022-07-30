@@ -6,18 +6,48 @@ import { Outlet } from 'react-router-dom';
 import { Main } from '../../components/Main/Main';
 import { AppBar } from '../../components/AppBar/AppBar';
 import { Box } from '@mui/system';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import HomeToolbar from './Toolbar/HomeToolbar';
 import MytaskToolbar from './Toolbar/MytaskToolbar';
+import { useSelector, useDispatch } from 'react-redux';
+import {pathMyTask } from '../../routes/routesAsana';
+import { generatePath } from 'react-router-dom';
+import { URLS } from '../../routes/routesAsana';
+
+
+
+
 
 export default function Content(props) {
+	const currentWorkSpace = useSelector(
+		state => state.WorkspaceReducer.currentWorkSpace
+	);
 	const { open, setOpen, drawerWidth } = props;
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
+
+	
+	
+	
+	let pathWorkspace = "";
+
+	if(currentWorkSpace && currentWorkSpace.workspace_id){
+		pathWorkspace = generatePath(URLS.workspace,{ workspaceId: currentWorkSpace.workspace_id  });
+	}
+	
+	const elementToolbar = useRoutes([
+		{
+			path: pathWorkspace,
+			element: <HomeToolbar />,
+		},
+		{ path: URLS.myTask, element: <MytaskToolbar /> },
+	]);
+
 	return (
-		<Main open={open} drawerWidth={drawerWidth}>
+		<Main open={open} drawerWidth={drawerWidth} sx={{ padding: '0px' }}>
 			{/* header (toolbar) */}
 			<AppBar
 				position='fixed'
@@ -34,12 +64,7 @@ export default function Content(props) {
 							<ChevronRightIcon />
 						</IconButton>
 
-						<Routes>
-							<Route path='home'>
-								<Route path=':workspace_id' element={<HomeToolbar />} />
-							</Route>
-							<Route path='my-task' element={<MytaskToolbar />} />
-						</Routes>
+						{elementToolbar}
 					</Box>
 
 					<p>Avatar</p>

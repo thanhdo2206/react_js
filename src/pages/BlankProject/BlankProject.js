@@ -4,7 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProject } from '../../redux/actions/AsanaAction';
+import { createProjectAction } from '../../redux/actions/WorkspaceAction';
 
 const PROJECT_NAME_REQUIRED = 'Project name is required.';
 
@@ -31,9 +31,10 @@ export default function BlankProject() {
 	const [errorRequired, setErrorRequired] = useState('');
 	const dispatch = useDispatch();
 	const currentWorkSpace = useSelector(
-		state => state.AsanaReducer.currentWorkSpace
+		state => state.WorkspaceReducer.currentWorkSpace
 	);
 
+	// console.log(currentWorkSpace);
 	const handleSubmit = event => {
 		event.preventDefault();
 		if (!projectName.trim()) {
@@ -44,13 +45,13 @@ export default function BlankProject() {
 		dispatchProject(projectName);
 	};
 
-	const dispatchProject = async projectName => {
-		try {
-			await dispatch(createProject(projectName));
-			navigate(`/main-page/home/${currentWorkSpace.workspace_id}`);
-		} catch (error) {
-			console.log(error.response);
-		}
+	const dispatchProject =  projectName => {
+		
+			navigate(-1);
+			dispatch(createProjectAction(projectName));
+			// navigate(`/main-page/home/${currentWorkSpace.workspace_id}`);
+			
+		
 	};
 
 	const getValue = event => {

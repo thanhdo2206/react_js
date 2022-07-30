@@ -1,8 +1,11 @@
 import {combineReducers,createStore} from "redux";
-import AsanaReducer from "./reducers/AsanaReducer"
+import WorkspaceReducer from "./reducers/WorkspaceReducer"
+import ProjectReducer from "./reducers/ProjectReducer"
+
 
 const rootReducer = combineReducers({
-    AsanaReducer,
+    WorkspaceReducer,
+    ProjectReducer,
 })
 
 const store = createStore(rootReducer);

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Projects from './Projects';
 import Members from './Members';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentWorkspaceAction } from '../../redux/actions/WorkspaceAction';
+import Axios from 'axios';
+import { getDate } from '../../utils/date';
 
 const styles = {
 	textDate: {
@@ -18,71 +23,53 @@ const styles = {
 };
 
 export default function Home() {
-	const getDate = () => {
-		let today = new Date();
-		const weekday = [
-			'Sunday',
-			'Monday',
-			'Tuesday',
-			'Wednesday',
-			'Thursday',
-			'Friday',
-			'Saturday',
-		];
-		let dayOfWeek = weekday[today.getDay()];
-		const months = [
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December',
-		];
-		let curMonth = months[today.getMonth()];
-		let dayOfMonth = today.getDate();
+	const dispatch = useDispatch();
+	const { workspaceId } = useParams();
 
-		let textToday = `${dayOfWeek}, ${curMonth} ${dayOfMonth}`;
-		return textToday;
-	};
+	useEffect(() => {
+		async function fetchData() {
+			if (workspaceId) {
+				// try {
 
-	const getMess = () => {
+				// 	const {data} = await Axios.get(`https://projectasana.herokuapp.com/api/ws/${workspaceId}`)
+				// 	console.log(data);
+				// 	dispatch(setCurrentWorkspaceAction(data));
+				// } catch (error) {
+				// 	console.log(error);
+				// }
+				
+				dispatch(setCurrentWorkspaceAction(workspaceId));
+			}
+		}
+
+		fetchData();
+	}, []);
+
+	const getGreetingMessage = () => {
 		let day = new Date();
 		let hr = day.getHours();
-		let message = '';
-		if (hr >= 0 && hr < 12) {
-			message = 'Good Morning';
-		}
 
-		if (hr >= 12 && hr <= 17) {
-			message = 'Good Afternoon';
-		}
-		if (hr > 17) {
-			message = 'Good Evening';
-		}
+		if (hr >= 0 && hr < 12) return 'Good Morning';
 
-		return message;
+		if (hr >= 12 && hr <= 17) return 'Good Afternoon';
+
+		if (hr > 17) return 'Good Evening';
 	};
 
 	return (
-		<Box>
+		<Box sx={{ padding: '24px' }}>
 			<p style={styles.textDate}>{getDate()}</p>
-			<p style={styles.welcomeMessenger}>{`${getMess()}, Thanh`}</p>
+			<p style={styles.welcomeMessenger}>{`${getGreetingMessage()}, Thanh`}</p>
 			<Grid container spacing={4} mt={5}>
 				<Grid item xs={6}>
-					<Projects></Projects>
+					<Projects />
 				</Grid>
 
 				<Grid item xs={6}>
 					<Box>
 						<h3 style={{ marginBottom: '10px' }}>Members</h3>
 						<Divider sx={{ borderColor: '#ccc' }} />
-						<Members></Members>
+						<Members />
 					</Box>
 				</Grid>
 			</Grid>

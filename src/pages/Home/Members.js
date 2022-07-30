@@ -15,19 +15,23 @@ const styles = {
 
 export default function Members() {
 	const currentWorkSpace = useSelector(
-		state => state.AsanaReducer.currentWorkSpace
+		state => state.WorkspaceReducer.currentWorkSpace
 	);
 
-	const { members } = currentWorkSpace;
+	let members = [];
+
+	if (currentWorkSpace && currentWorkSpace.members)
+		members = currentWorkSpace.members;
+
 	return (
 		<Box mt={3}>
 			{members.map((member, index) => {
 				return (
-					<BoxHover key={member.userName} mb={2}>
+					<BoxHover key={member.username} mb={2}>
 						<Box sx={styles.boxAvatar} borderRadius='50%'></Box>
 						<Box>
-							<p style={{ marginBottom: '6px' }}>{member.userName}</p>
-							<p style={{ color: '#ccc' }}>{member.gmail}</p>
+							<p style={{ marginBottom: '6px' }}>{member.username}</p>
+							<p style={{ color: '#ccc' }}>{member.email}</p>
 						</Box>
 					</BoxHover>
 				);

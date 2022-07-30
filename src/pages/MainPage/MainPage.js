@@ -1,5 +1,5 @@
 import React from 'react';
-import SideBar from './SideBar';
+import SideBar from './SideBar/SideBar';
 import Content from './Content';
 import Box from '@mui/material/Box';
 

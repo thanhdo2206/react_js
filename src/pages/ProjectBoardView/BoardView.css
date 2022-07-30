@@ -1,0 +1,258 @@
+:root {
+	--background-main: #f9f8f8;
+	--background-list: #f3f3f3;
+	--color-border: #cbcbcb;
+	--color-scrollbar-thumb: #ddd;
+	--color-scrollbar-track: #eee;
+	--color-text-weak: #6d6e6f;
+	--background-hover: rgba(55, 23, 23, 0.03);
+	--color-outline-input: #2f4edacc;
+	--color-danger-text: #ce3056;
+	--color-text: #1e1f21;
+	--padding-x: 10px;
+}
+
+.board__columns {
+	background-color: var(--background-main);
+	margin-top: 140px;
+	padding: 20px 10px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	position: relative;
+	/* min-width: calc(100vw - 239px); */
+	min-width: 100%;
+	height: calc(100vh - 140px);
+}
+
+.board__container-columns {
+	/* max-width: 100%; */
+	height: 100%;
+	position: absolute;
+	display: flex;
+}
+
+.board__container-columns > .smooth-dnd-container {
+	height: 100%;
+}
+
+.section__column-item {
+	border: 1px solid var(--background-main);
+	/* width: 320px; */
+	padding: 16px 12px 16px;
+	height: 100%;
+}
+
+.section__column-item:hover {
+	border-color: #cbcbcb;
+	border-radius: 10px;
+}
+
+.section-ghost {
+	border: 2px solid #656464;
+	border-radius: 10px;
+}
+
+.section-drop-preview {
+	background-color: rgba(150, 150, 200, 0.1);
+	border: 1px dashed #abc;
+	margin: 5px 45px 5px 5px;
+	border-radius: 10px;
+}
+
+.board__header {
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 8px;
+	padding: 0px var(--padding-x);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.icon__drag {
+	color: var(--color-text-weak);
+	margin-left: 2px;
+	cursor: grab;
+	padding: 4px;
+	display: flex;
+}
+
+.icon__drag:hover {
+	color: #000000;
+	background-color: var(--background-hover);
+	border-radius: 5px;
+}
+
+.title__section {
+	border-radius: 8px;
+	border: 1px solid var(--background-main);
+	background-color: var(--background-main);
+	padding: 10px 0px;
+	padding-left: 5px;
+	font-size: 16px;
+	font-weight: bold;
+	flex: 1;
+	margin-right: 6px;
+	cursor: pointer;
+}
+
+.title__section:focus {
+	background-color: #fff;
+	outline: 3px solid var(--color-outline-input);
+	border: 1px solid #000000;
+	user-select: all;
+	-webkit-user-select: all; /* for Safari */
+}
+
+.list__task-container {
+	background-color: var(--background-list);
+	height: 90%;
+	border-radius: 10px;
+}
+
+.list__tasks {
+	/* height: 100%; */
+	/* check lại chỗ ni trên màn hình lớn hơn */
+	height: 66vh;
+	overflow-y: auto;
+	/* background-color: var(--background-list); */
+}
+
+.list__tasks.css-h4y409-MuiList-root {
+	padding: 10px var(--padding-x);
+}
+
+.list__tasks::-webkit-scrollbar {
+	width: 8px;
+}
+
+.list__tasks::-webkit-scrollbar-thumb {
+	background-color: var(--color-scrollbar-thumb);
+	border-radius: 10px;
+}
+
+.list__tasks::-webkit-scrollbar-track {
+	background-color: var(--color-scrollbar-track);
+	border-radius: 10px;
+}
+
+.task__item {
+	background-color: #fff;
+	border-radius: 10px;
+	border: 1px solid var(--color-border);
+	margin-bottom: 8px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	height: 100px;
+	cursor: pointer;
+}
+
+.task__item:hover {
+	border-color: #767676;
+}
+
+.task-ghost {
+	transition: transform 0.18s ease;
+	transform: rotateZ(5deg);
+	border: 2px solid #656464;
+}
+
+/* .task-ghost-drop {
+	transition: transform 0.18s ease-in-out;
+	transform: rotateZ(0deg);
+} */
+
+.task-drop-preview {
+	background-color: rgba(150, 150, 200, 0.1);
+	border: 1px dashed #abc;
+	margin: 5px;
+	border-radius: 10px;
+}
+
+.btn__addTask {
+	text-align: center;
+	padding: 10px 0px;
+	color: var(--color-text-weak);
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.btn__addTask:hover {
+	color: black;
+	background-color: var(--background-hover);
+	cursor: pointer;
+}
+
+/* add section */
+
+.btn__addSection {
+	text-align: center;
+	padding: 10px;
+	color: var(--color-text-weak);
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-top: 16px;
+	width: 146px;
+	display: flex;
+	align-items: center;
+}
+
+.btn__addSection:hover {
+	color: black;
+	background-color: var(--background-hover);
+	cursor: pointer;
+}
+
+.form__add-section {
+	border: 1px solid var(--color-border);
+	border-radius: 10px;
+	/* height: 100vh; */
+	width: 369px;
+}
+
+/* .list__task-addsection{
+	height:91%;
+} */
+
+.input__add-section {
+	border-radius: 8px;
+	border: 1px solid #000;
+	outline: 3px solid var(--color-outline-input);
+	padding: 10px 12px;
+	width: 90%;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+
+.btnOption__section {
+	color: var(--color-text-weak);
+	margin-left: 2px;
+	cursor: pointer;
+	padding: 4px;
+}
+
+.btnOption__section.css-i4bv87-MuiSvgIcon-root {
+	display: flex;
+}
+
+.btnOption__section:hover {
+	color: #000000;
+	background-color: var(--background-hover);
+	border-radius: 5px;
+}
+
+.menu__option-item.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+	font-size: 13px;
+}
+
+.menu__option-item.delete__section-task {
+	color: var(--color-danger-text);
+}
+
+.icon__option.css-i4bv87-MuiSvgIcon-root {
+	font-size: 20px;
+	margin-right: 4px;
+	/* stroke: black; */
+	-webkit-text-stroke: 1px white;
+}

@@ -33,10 +33,14 @@ const styles = {
 
 export default function Projects() {
 	const currentWorkSpace = useSelector(
-		state => state.AsanaReducer.currentWorkSpace
+		state => state.WorkspaceReducer.currentWorkSpace
 	);
 
-	const { projects } = currentWorkSpace;
+	let projects = [];
+
+	if (currentWorkSpace && currentWorkSpace.projects)
+		projects = currentWorkSpace.projects;
+
 	return (
 		<Box sx={styles.borderBox}>
 			<Box sx={{ padding: '20px' }}>
@@ -49,17 +53,17 @@ export default function Projects() {
 									<BoxHover>
 										<Box sx={styles.divBoxProject}></Box>
 										<Box>
-											<p style={{ marginBottom: '6px' }}>{project.project_name}</p>
-											{project.project_status === 0 ? (
-												''
-											) : (
-												<Box sx={{ display: 'flex', alignItems: 'center' }}>
+											<p>{project.project_name}</p>
+											{project.project_status ? (
+												<Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }}>
 													<InventoryIcon
 														color='disabled'
 														sx={{ fontSize: '14px', marginRight: '5px' }}
 													></InventoryIcon>
 													<span style={styles.cssArchived}>Archived</span>
 												</Box>
+											) : (
+												''
 											)}
 										</Box>
 									</BoxHover>

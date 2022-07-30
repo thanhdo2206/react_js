@@ -15,7 +15,8 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	box-sizing: border-box;
-	
+	font-family: 'League Spartan', sans-serif;
+	font-size:'14px';
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
