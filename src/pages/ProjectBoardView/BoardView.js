@@ -4,36 +4,59 @@ import './BoardView.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag } from '../../utils/dragDrop';
-import { updateDropSection } from '../../redux/actions/ProjectAction';
+import {
+	getProjectApi,
+	updateDropSection,
+	updateDropSectionApi,
+} from '../../redux/actions/ProjectAction';
+
+// import {
+// 	updateDropSection,
+// 	updateDropSectionApi,
+// } from '../../redux/actions/SectionAction';
 import { mapOrder } from '../../utils/sort';
 import ButtonAddSection from './ButtonAddSection';
 import Section from './Section';
+import { useParams } from 'react-router-dom';
+import { getAllSectionApi } from '../../redux/actions/SectionAction';
 
 export default function BoardView() {
-	const currentProject = useSelector(
+	const { sectionOrder } = useSelector(
 		state => state.ProjectReducer.currentProject
 	);
 
+	const sections = useSelector(state => state.SectionReducer.arrSections);
+
 	const dispatch = useDispatch();
 
-	const boardColumnsDom = useRef(null);
-	const boardContainerDom = useRef(null);
+	const { projectId } = useParams();
 
-	const { sections, sectionOrder } = currentProject;
+	useEffect(() => {
+		async function fetchData() {
+			if (projectId) {
+				await dispatch(getAllSectionApi(projectId));
+				dispatch(getProjectApi(projectId));
+			}
+		}
 
-	const sectionsSort = mapOrder(sections, sectionOrder, 'section_id');
+		fetchData();
+	}, []);
+
+	const sectionsSort =
+		sectionOrder && sections ? mapOrder(sections, sectionOrder, '_id') : [];
 
 	const onSectionDrop = dropResult => {
 		let newSections = applyDrag(sections, dropResult);
 
-		let newSectionOrder = newSections.map(section => section.section_id);
+		let newSectionOrder = newSections.map(section => section._id);
 
+		dispatch(updateDropSectionApi(newSectionOrder, projectId));
 		dispatch(updateDropSection(newSectionOrder));
 	};
 
 	const renderSections = () => {
 		return sectionsSort.map((section, index) => {
-			const keyRender = `${section.section_name} ${Date.now()}`;
+			const keyRender = `${section.sectionName} ${Date.now()}`;
 			return (
 				<Draggable key={keyRender}>
 					<Section section={section} />
@@ -42,21 +65,9 @@ export default function BoardView() {
 		});
 	};
 
-	const scrollBoardColumns = () => {
-		console.log(boardContainerDom.current.offsetWidth);
-		boardColumnsDom.current.scrollLeft = boardContainerDom.current.offsetWidth + 369;
-	};
-
 	return (
-		<Box component='div' className='board__columns' ref={boardColumnsDom}>
-			<Box component='div' className='board__container-columns' ref={boardContainerDom}>
-				<button
-					onClick={() => {
-						scrollBoardColumns();
-					}}
-				>
-					Click
-				</button>
+		<Box component='div' className='board__columns'>
+			<Box component='div' className='board__container-columns'>
 				<Container
 					getChildPayload={index => sections[index]}
 					orientation='horizontal'
@@ -72,7 +83,7 @@ export default function BoardView() {
 				>
 					{renderSections()}
 
-					<ButtonAddSection scrollBoardColumns={scrollBoardColumns}/>
+					<ButtonAddSection />
 				</Container>
 			</Box>
 		</Box>

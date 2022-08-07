@@ -35,7 +35,7 @@ export default function ListOption() {
 	const arrListOption = [
 		{
 			title: 'Home',
-			href: `/main-page/home/${currentWorkSpace.workspace_id}`,
+			href: `/main-page/home/${currentWorkSpace._id}`,
 			tagIcon: <HomeOutlinedIcon sx={styles.iconButton} />,
 		},
 		{
@@ -54,7 +54,7 @@ export default function ListOption() {
 		<List>
 			{arrListOption.map((item, index) => {
 				return (
-					<ListItem sx={styles.listItem} key={item.title} disablePadding>
+					<ListItem className="listItem__hover" sx={styles.listItem} key={item.title} disablePadding>
 						<NavLink className='nav__link--sidebar' to={item.href} style={styles.navLink}>
 							<ListItemButton>
 								<ListItemIcon sx={{ minWidth: '28px' }}>{item.tagIcon}</ListItemIcon>

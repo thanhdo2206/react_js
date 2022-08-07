@@ -5,14 +5,15 @@ import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { NavLink } from 'react-router-dom';
 import { DrawerHeader } from '../../../components/DrawerHeader/DrawerHeader';
+import { ListItemCustomize } from '../../../components/List/List';
+import { Avatar, AvatarGroup } from '@mui/material';
+import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import UnarchiveProjects from './UnarchiveProjects';
 import ListOption from './ListOption';
-import { List, ListItemText, Tooltip } from '@mui/material';
-import { ListItemCustomize } from '../../../components/List/List';
-import { useSelector } from 'react-redux';
+import { List, ListItem, ListItemText, Tooltip } from '@mui/material';
 import ArchiveProjects from './ArchiveProjects';
-import './SideBar.css'
+import './SideBar.css';
 
 const styles = {
 	iconBtnClose: {
@@ -45,6 +46,11 @@ export default function SideBar(props) {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+
+	let members = [];
+
+	if (currentWorkSpace && currentWorkSpace.members)
+		members = currentWorkSpace.members;
 
 	return (
 		<Drawer
@@ -85,8 +91,8 @@ export default function SideBar(props) {
 
 			{/* list project */}
 			<List>
-				<ListItemCustomize>
-					<ListItemText primary={currentWorkSpace.workspace_name} />
+				<ListItem>
+					<ListItemText primary={currentWorkSpace.workspaceName} />
 
 					<Tooltip title='Create a project' placement='right'>
 						<NavLink to='/new-project' style={styles.navLink}>
@@ -95,14 +101,44 @@ export default function SideBar(props) {
 							</Box>
 						</NavLink>
 					</Tooltip>
-				</ListItemCustomize>
+				</ListItem>
+
+				{/* members in workspace */}
+				<Box
+					sx={{ display: 'flex', justifyContent: 'flex-start', padding: '0 12px' }}
+					className='sideBar__avatar--menu'
+				>
+					<AvatarGroup max={3}>
+						{members.map((member, index) => {
+							return (
+								<Avatar
+									sx={{
+										bgcolor: '#F1BD6C',
+										width: '25px',
+										height: '25px',
+										fontSize: '13px',
+										border: 'none !important',
+										mr: 1.5,
+										color: 'black',
+									}}
+									key={index}
+									className='sideBar__avatar--show'
+								>
+									{`${member.username.slice(0, 1).toUpperCase()}${member.username.slice(
+										1,
+										2
+									)}`}
+									<div className='sideBar__avatar--hoverEmail'>{member.email}</div>
+								</Avatar>
+							);
+						})}
+					</AvatarGroup>
+				</Box>
 
 				<UnarchiveProjects />
 
 				<ArchiveProjects />
 			</List>
-
-			
 		</Drawer>
 	);
 }

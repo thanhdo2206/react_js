@@ -1,60 +1,59 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BoxHover } from './BoxHover';
 import { useSelector, useDispatch } from 'react-redux';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import AddIcon from '@mui/icons-material/Add';
+import './project.css';
+import { Divider, Typography } from '@mui/material';
 
 const styles = {
-	borderBox: {
-		border: '1px solid #ccc',
-		borderRadius: '10px',
+	divider: {
+		borderColor: '#ccc',
 	},
-
-	navLink: {
-		textDecoration: 'none',
-		color: '#000',
-	},
-
-	divBoxProject: {
-		width: '48px',
-		height: '48px',
-		borderRadius: '10px',
-		backgroundColor: '#9ee7e3',
-		marginRight: '10px',
-	},
-
 	cssArchived: {
 		color: '#6d6e6f',
 		fontSize: '14px',
 	},
 };
 
+
+
 export default function Projects() {
-	const currentWorkSpace = useSelector(
-		state => state.WorkspaceReducer.currentWorkSpace
-	);
+	const arrProject = useSelector(state => state.ProjectReducer.arrProject);
 
-	let projects = [];
+	const navigate = useNavigate();
 
-	if (currentWorkSpace && currentWorkSpace.projects)
-		projects = currentWorkSpace.projects;
+	const projects = arrProject ? [...arrProject] : [];
+
+	const addProject = ()=>{
+		navigate('/new-project');
+	}
 
 	return (
-		<Box sx={styles.borderBox}>
-			<Box sx={{ padding: '20px' }}>
-				<h3 style={{ margin: '0px' }}>Projects</h3>
-				<Grid container spacing={2} rowSpacing={2} pt={3}>
+		<Box className='home__projectBlock--border'>
+			<Box>
+				<p className='home__header--title'>Projects</p>
+				<BoxHover className='home__box--addProject' onClick={addProject}>
+					<Box className='home__icon--borderAddProject'>
+						<AddIcon className='home__icon--addProject' />
+					</Box>
+					<Typography className='home__typo--addProject' >Add Projects</Typography>
+				</BoxHover>
+				<Box className='home__box--listProject'>
 					{projects.map((project, index) => {
+						let keyRender = `${project.projectName} ${index}`;
+
 						return (
-							<Grid item xs={6} key={project.project_name}>
-								<NavLink to='#' style={styles.navLink}>
+							<Box key={keyRender} className='home__box--showProject'>
+								<NavLink to='#' className='home__navLink'>
 									<BoxHover>
-										<Box sx={styles.divBoxProject}></Box>
+										<Box className='home__box--square'></Box>
 										<Box>
-											<p>{project.project_name}</p>
-											{project.project_status ? (
+											<p>{project.projectName}</p>
+											{project.archived ? (
 												<Box sx={{ display: 'flex', alignItems: 'center', mt: '6px' }}>
 													<InventoryIcon
 														color='disabled'
@@ -68,10 +67,10 @@ export default function Projects() {
 										</Box>
 									</BoxHover>
 								</NavLink>
-							</Grid>
+							</Box>
 						);
 					})}
-				</Grid>
+				</Box>
 			</Box>
 		</Box>
 	);

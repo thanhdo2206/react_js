@@ -3,7 +3,7 @@ import './verifyEmail.css';
 
 export default function VerifyEmail() {
 	return (
-		<div className='containber'>
+		<div className='container'>
 			<div className='container__verify'>
 				<img
 					style={{ marginBottom: '40px' }}

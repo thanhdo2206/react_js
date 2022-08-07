@@ -1,34 +1,11 @@
-import {
-	SET_CURRENT_WORKSPACE,
-	CREATE_PROJECT_OF_WORKSPACE,
-	ARCHIVE_PROJECT,
-} from '../types/AsanaTypes';
+import { SET_CURRENT_WORKSPACE } from '../types/WorkspaceTypes';
 
-export const setCurrentWorkspaceAction = (workspaceId) => {
+
+export const setCurrentWorkspaceAction = dataWorkspace => {
 	let action = {
 		type: SET_CURRENT_WORKSPACE,
-		workspaceId,
+		dataWorkspace,
 	};
 
 	return action;
 };
-
-export const createProjectAction = projectName => {
-	let action = {
-		type: CREATE_PROJECT_OF_WORKSPACE,
-		projectName,
-	};
-
-	return action;
-};
-
-export const archiveProjectAction = (status, projectId) => {
-	let action = {
-		type: ARCHIVE_PROJECT,
-		status,
-		projectId,
-	};
-
-	return action;
-};
-

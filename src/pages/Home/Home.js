@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import Projects from './Projects';
 import Members from './Members';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentWorkspaceAction } from '../../redux/actions/WorkspaceAction';
-import Axios from 'axios';
 import { getDate } from '../../utils/date';
+import * as workspaceService from '../../services/workspaceService';
+import { getAllProjectInWorkspaceApi } from '../../redux/actions/ProjectAction';
 
 const styles = {
 	textDate: {
@@ -20,34 +20,31 @@ const styles = {
 		textAlign: 'center',
 		fontSize: '34px',
 	},
+	memberBlock: {
+		height: '100%',
+	},
 };
 
 export default function Home() {
 	const dispatch = useDispatch();
+	const currentUser = useSelector(state => state.authReducer.currentUser);
+
 	const { workspaceId } = useParams();
 
 	useEffect(() => {
 		async function fetchData() {
 			if (workspaceId) {
-				// try {
-
-				// 	const {data} = await Axios.get(`https://projectasana.herokuapp.com/api/ws/${workspaceId}`)
-				// 	console.log(data);
-				// 	dispatch(setCurrentWorkspaceAction(data));
-				// } catch (error) {
-				// 	console.log(error);
-				// }
-				
-				dispatch(setCurrentWorkspaceAction(workspaceId));
+				const result = await workspaceService.getWorkspaceById(workspaceId);
+				dispatch(setCurrentWorkspaceAction(result.data));
+				dispatch(getAllProjectInWorkspaceApi(workspaceId));
 			}
 		}
-
 		fetchData();
 	}, []);
 
 	const getGreetingMessage = () => {
-		let day = new Date();
-		let hr = day.getHours();
+		const day = new Date();
+		const hr = day.getHours();
 
 		if (hr >= 0 && hr < 12) return 'Good Morning';
 
@@ -59,16 +56,16 @@ export default function Home() {
 	return (
 		<Box sx={{ padding: '24px' }}>
 			<p style={styles.textDate}>{getDate()}</p>
-			<p style={styles.welcomeMessenger}>{`${getGreetingMessage()}, Thanh`}</p>
+			<p style={styles.welcomeMessenger}>{`${getGreetingMessage()}, ${
+				currentUser.userName
+			}`}</p>
 			<Grid container spacing={4} mt={5}>
 				<Grid item xs={6}>
 					<Projects />
 				</Grid>
 
-				<Grid item xs={6}>
+				<Grid item xs={6} sx={styles.memberBlock}>
 					<Box>
-						<h3 style={{ marginBottom: '10px' }}>Members</h3>
-						<Divider sx={{ borderColor: '#ccc' }} />
 						<Members />
 					</Box>
 				</Grid>

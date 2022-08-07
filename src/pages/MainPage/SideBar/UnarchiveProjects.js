@@ -1,13 +1,18 @@
 import React from 'react';
-import { ListItemCustomize } from '../../../components/List/List';
-import { ListItemText } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Box, ListItemText } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import ButtonMore from './ButtonMore';
 import { NavLink } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
+import { getProjectApi } from '../../../redux/actions/ProjectAction';
 
 
 const styles = {
+	boxProjectContainer: {
+		padding: '2px 16px',
+		display: 'flex',
+		alignItems: 'center',
+	},
 	boxProject: {
 		width: '8px',
 		height: '8px',
@@ -15,43 +20,52 @@ const styles = {
 		marginRight: '10px',
 		borderRadius: '2px',
 	},
-	
+	navLink: {
+		width: '100%',
+		color: '#fff',
+		textDecoration: 'none',
+	},
 };
 
 export default function UnarchiveProjects() {
-	const currentWorkSpace = useSelector(
-		state => state.WorkspaceReducer.currentWorkSpace
-	);
+	const dispatch = useDispatch();
 
 	let projectUnarchives = [];
 
-	if (currentWorkSpace && currentWorkSpace.projects) {
-		projectUnarchives = currentWorkSpace.projects.filter(
-			project => !project.project_status
-		);
+	const arrProject = useSelector(state => state.ProjectReducer.arrProject);
+
+	if (arrProject) {
+		projectUnarchives = arrProject.filter(project => !project.archived);
 	}
 
 	return (
 		<div>
-			{projectUnarchives.map(project => {
+			{projectUnarchives.map((project, index) => {
+				let href = `/main-page/${project._id}/list`;
+				let keyRender = `${project.projectName} ${index}`;
 				return (
-					<ListItemCustomize
-						key={project.project_name}
-						sx={{ px: '16px' }}
-						disablePadding
-					>
-						
-							<div style={styles.boxProject}></div>
-							<ListItemText
-								sx={{
-									'& .css-10hburv-MuiTypography-root': { fontSize: '12px' },
-								}}
-								primary={project.project_name}
-							/>
+					<ListItem className='listItem__hover' key={keyRender} disablePadding>
+						<NavLink
+							className='nav__link--sidebar'
+							to={href}
+							style={styles.navLink}
+							onClick={() => {
+								dispatch(getProjectApi(project._id));
+							}}
+						>
+							<Box sx={styles.boxProjectContainer}>
+								<div style={styles.boxProject}></div>
+								<ListItemText
+									sx={{
+										'& .css-10hburv-MuiTypography-root': { fontSize: '12px' },
+									}}
+									primary={project.projectName}
+								/>
 
-							<ButtonMore project={project} />
-						
-					</ListItemCustomize>
+								<ButtonMore project={project} />
+							</Box>
+						</NavLink>
+					</ListItem>
 				);
 			})}
 		</div>

@@ -19,12 +19,17 @@ export default function Section(props) {
 
 	const [checkLeftRight, setLeftRight] = useState();
 
-	const setAddSectionLeft = () => {
+	const [isDisplayFormNewTaskTop, setDisplayFormNewTaskTop] = useState(false);
+
+	const [isDisplayFormNewTaskBottom, setDisplayFormNewTaskBottom] =
+		useState(false);
+
+	const setAddFormSectionLeft = () => {
 		setDisplayFormAddSectionLeft(true);
 		setLeftRight(0);
 	};
 
-	const setAddSectionRight = async () => {
+	const setAddFormSectionRight = async () => {
 		setDisplayFormAddSectionRight(true);
 		setLeftRight(1);
 	};
@@ -62,6 +67,14 @@ export default function Section(props) {
 		setDisplayFormAddSectionRight(false);
 	};
 
+	const setNewTaskTop = () => {
+		setDisplayFormNewTaskTop(true);
+	};
+
+	const setNewTaskBottom = () => {
+		setDisplayFormNewTaskBottom(true);
+	};
+
 	return (
 		<Box component='div' sx={{ display: 'flex', height: '100%' }}>
 			<Box>
@@ -74,11 +87,19 @@ export default function Section(props) {
 
 			<Box component='div' className='section__column-item'>
 				<BoardHeader
-					setAddSectionLeft={setAddSectionLeft}
-					setAddSectionRight={setAddSectionRight}
+					setAddFormSectionLeft={setAddFormSectionLeft}
+					setAddFormSectionRight={setAddFormSectionRight}
 					section={section}
+					setNewTaskTop={setNewTaskTop}
 				></BoardHeader>
-				<ListTask section={section}></ListTask>
+				{/* <ListTask
+					isDisplayFormNewTaskTop={isDisplayFormNewTaskTop}
+					isDisplayFormNewTaskBottom={isDisplayFormNewTaskBottom}
+					section={section}
+				></ListTask> */}
+				<Box className='btn__addTask' onClick={setNewTaskBottom}>
+					+ Add Task
+				</Box>
 			</Box>
 
 			<Box>

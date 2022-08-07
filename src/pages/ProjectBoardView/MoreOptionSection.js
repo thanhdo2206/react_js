@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteSectionAction } from '../../redux/actions/ProjectAction';
 
 export default function MoreOptionSection(props) {
-	const { section, renameSection, setAddSectionLeft, setAddSectionRight } =
+	const { section, renameSection, setAddFormSectionLeft, setAddFormSectionRight } =
 		props;
 	const dispatch = useDispatch();
 
@@ -55,21 +55,27 @@ export default function MoreOptionSection(props) {
 	const addFormSectionRightLeft = checkLeftRight => {
 		handleCloseMore();
 		if (checkLeftRight) {
-			setAddSectionLeft();
+			setAddFormSectionLeft();
 			return;
 		}
 
-		setAddSectionRight();
+		setAddFormSectionRight();
 	};
 
 	return (
 		<Box>
 			<TooltipCustomize title='More actions' placement='bottom'>
-				<MoreHorizIcon className='btnOption__section' onClick={handleOpenMore} />
+				<MoreHorizIcon
+					className='btnOption'
+					onClick={handleOpenMore}
+					aria-controls={open ? 'menuOption__section' : undefined}
+					aria-haspopup='true'
+					aria-expanded={open ? 'true' : undefined}
+				/>
 			</TooltipCustomize>
 
 			<Menu
-				id='basic-menu'
+				id='menuOption__section'
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleCloseMore}
@@ -97,7 +103,10 @@ export default function MoreOptionSection(props) {
 					<ArrowForwardOutlinedIcon className='icon__option' />
 					Add section to right
 				</MenuItem>
-				<MenuItem className='menu__option-item delete__section-task' onClick={toggleModal}>
+				<MenuItem
+					className='menu__option-item delete__section-task'
+					onClick={toggleModal}
+				>
 					<DeleteOutlineIcon className='icon__option' />
 					Delete Section
 				</MenuItem>

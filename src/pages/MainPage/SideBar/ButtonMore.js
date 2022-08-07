@@ -2,8 +2,8 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import {  useDispatch } from 'react-redux';
-import { archiveProjectAction } from '../../../redux/actions/WorkspaceAction';
+import { useDispatch } from 'react-redux';
+import { archiveUnarchiveProjectApi } from '../../../redux/actions/ProjectAction';
 
 const styles = {
 	cssMenuItem: {
@@ -26,31 +26,39 @@ export default function ButtonMore(props) {
 	const open = Boolean(anchorEl);
 
 	const { project } = props;
-	const checkArchive = project.project_status;
+	const checkArchive = project.archived;
 
 	const handleClick = event => {
-		setAnchorEl(event.currentTarget);
+		setAnchorEl(event.target);
 	};
 
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	const handleArchive = (status, projectId) => {
+	const handleArchive =async (status, projectId) => {
+		
+		await dispatch(archiveUnarchiveProjectApi(status, projectId));
 		handleClose();
-		dispatch(archiveProjectAction(status, projectId));
 	};
 
 	return (
 		<div>
-			<MoreHorizIcon onClick={handleClick} sx={styles.btnMore} />
+			<MoreHorizIcon
+				
+				aria-controls={open ? 'menu__project' : undefined}
+				aria-haspopup='true'
+				aria-expanded={open ? 'true' : undefined}
+				onClick={handleClick}
+				sx={styles.btnMore}
+			/>
 
-			<Menu id='basic-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
+			<Menu id='menu__project' anchorEl={anchorEl} open={open} onClose={handleClose}>
 				{checkArchive ? (
 					<MenuItem
 						sx={styles.cssMenuItem}
 						onClick={() => {
-							handleArchive(0, project.project_id);
+							handleArchive(false, project._id);
 						}}
 					>
 						Unarchive Project
@@ -59,7 +67,7 @@ export default function ButtonMore(props) {
 					<MenuItem
 						sx={styles.cssMenuItem}
 						onClick={() => {
-							handleArchive(1, project.project_id);
+							handleArchive(true, project._id);
 						}}
 					>
 						Archive Project

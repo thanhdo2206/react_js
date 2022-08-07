@@ -9,13 +9,13 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { TooltipCustomize } from '../../components/ToolTip/ToolTip';
 
 export default function BoardHeader(props) {
-	const { section, setAddSectionLeft, setAddSectionRight } = props;
+	const { section, setAddFormSectionLeft, setAddFormSectionRight,setNewTaskTop } = props;
 
 	const titleSectionRef = useRef(null);
 
 	const dispatch = useDispatch();
 
-	const [titleSection, setTitleSection] = useState(section.section_name);
+	const [titleSection, setTitleSection] = useState(section.sectionName);
 
 	const handleTitleChange = e => {
 		const { value } = e.target;
@@ -50,7 +50,7 @@ export default function BoardHeader(props) {
 					className='title__section'
 					type='text'
 					spellCheck='false'
-					value={titleSection}
+					
 					onClick={e => {
 						e.target.select();
 					}}
@@ -59,15 +59,16 @@ export default function BoardHeader(props) {
 						e.preventDefault();
 					}}
 					ref={titleSectionRef}
+					value={titleSection}
 				/>
 			</form>
 			<TooltipCustomize title='Add task' placement='bottom'>
-				<AddIcon className='btnOption__section' fontSize='small' />
+				<AddIcon className='btnOption' fontSize='small' onClick={()=>{setNewTaskTop()}}/>
 			</TooltipCustomize>
 
 			<MoreOptionSection
-				setAddSectionLeft={setAddSectionLeft}
-				setAddSectionRight={setAddSectionRight}
+				setAddFormSectionLeft={setAddFormSectionLeft}
+				setAddFormSectionRight={setAddFormSectionRight}
 				section={section}
 				renameSection={renameSection}
 			/>

@@ -1,234 +1,231 @@
-import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import { useNavigate } from "react-router-dom";
-import { registerService } from "../../services/registerService";
+import React, { useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import { useNavigate } from 'react-router-dom';
+import { registerService } from '../../services/registerService';
 
 const EMAIL_REGEX =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const EMAIL_INVALID = "Email is invalid !";
-const TEXT_ERROR_PASSWORD = "Your password must have at least 8 characters !";
-const TEXT_ERROR_USERNAME = "User name must have at least 5 characters !";
+	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_INVALID = 'Email is invalid !';
+const TEXT_ERROR_PASSWORD = 'Your password must have at least 8 characters !';
+const TEXT_ERROR_USERNAME = 'User name must have at least 5 characters !';
+const TEXT_ERROR_EXIST_USERNAME = 'The user name already exists !';
+const TEXT_ERROR_EXIST_EMAIL = 'The email already exists !';
 
 const styles = {
-  spanExistAcount: {
-    fontSize: "14px",
-    color: "#ba1d23",
-    padding: "10px",
-    backgroundColor: "#efbfc1",
-    width: "100%",
-    textAlign: "center",
-    margin: "30px",
-  },
+	spanExistAcount: {
+		fontSize: '14px',
+		color: '#ba1d23',
+		padding: '10px',
+		backgroundColor: '#efbfc1',
+		width: '100%',
+		textAlign: 'center',
+		margin: '30px',
+	},
 };
 
 export default function SignUp() {
-  let navigate = useNavigate();
+	let navigate = useNavigate();
 
-  const [state, setState] = useState({
-    values: { userName: "", email: "", password: "" },
-    errors: { userName: "", email: "", password: "" },
-  });
+	const [state, setState] = useState({
+		values: { userName: '', email: '', password: '' },
+		errors: { userName: '', email: '', password: '' },
+	});
 
-  const [showPassword, setShowPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
-  const [checkExistAcount, setCheckExistAcount] = useState(true);
+	const [checkExistAcount, setCheckExistAcount] = useState(true);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+	const [textExistAcount, setTextExistAcount] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+	const handleClickShowPassword = () => {
+		setShowPassword(!showPassword);
+	};
 
-    let indexError = Object.values(state.errors).findIndex(
-      (error) => error !== ""
-    );
+	const handleSubmit = event => {
+		event.preventDefault();
 
-    if (indexError === -1) {
-      // console.log("dk thanh cong");
-      // navigate("/verify-email");
+		let indexError = Object.values(state.errors).findIndex(error => error !== '');
 
-      let values = { ...state.values };
-      registerApi(values);
-    }
+		if (indexError === -1) {
+			// console.log("dk thanh cong");
+			// navigate("/verify-email");
 
-    return false;
-  };
+			let values = { ...state.values };
+			registerApi(values);
+		}
 
-  const registerApi = async (values) => {
-    const result = await registerService(values);
-   
-    if (result.status === 200) {
-      navigate("/verify-email");
-    }
+		return false;
+	};
 
-    if (result.status === 400) {
-      setCheckExistAcount(false);
-    }
-  };
+	const registerApi = async values => {
+		const result = await registerService(values);
 
-  const validate = (name, value, newErrors) => {
-    if (!value.trim()) {
-      newErrors[name] = `${name} is required !`;
-      return;
-    }
+		if (result.status === 200) {
+			navigate('/verify-email');
+		}
 
-    switch (name) {
-      case "userName": {
-        let checkLength = value.length >= 5;
-        newErrors.userName = checkLength ? "" : TEXT_ERROR_USERNAME;
-        break;
-      }
+		if (result.status === 400) {
+			setCheckExistAcount(false);
+			setTextExistAcount(TEXT_ERROR_EXIST_EMAIL);
+		}
 
-      case "email": {
-        let checkRegex = EMAIL_REGEX.test(value.toLowerCase());
-        newErrors.email = checkRegex ? "" : EMAIL_INVALID;
-        break;
-      }
+		if (result.status === 500) {
+			setCheckExistAcount(false);
+			setTextExistAcount(TEXT_ERROR_EXIST_USERNAME);
+		}
+	};
 
-      case "password": {
-        let checkLength = value.length >= 8;
-        newErrors.password = checkLength ? "" : TEXT_ERROR_PASSWORD;
-        break;
-      }
+	const validate = (name, value, newErrors) => {
+		if (!value.trim()) {
+			newErrors[name] = `${name} is required !`;
+			return;
+		}
 
-      default:
-        return;
-    }
-  };
+		switch (name) {
+			case 'userName': {
+				let checkLength = value.length >= 5;
+				newErrors.userName = checkLength ? '' : TEXT_ERROR_USERNAME;
+				break;
+			}
 
-  const getValue = (event) => {
-    const { name, value } = event.target;
-    const newValues = { ...state.values, [name]: value };
-    const newErrors = { ...state.errors };
+			case 'email': {
+				let checkRegex = EMAIL_REGEX.test(value.toLowerCase());
+				newErrors.email = checkRegex ? '' : EMAIL_INVALID;
+				break;
+			}
 
-    validate(name, value, newErrors);
-    setState({ values: newValues, errors: newErrors });
-  };
+			case 'password': {
+				let checkLength = value.length >= 8;
+				newErrors.password = checkLength ? '' : TEXT_ERROR_PASSWORD;
+				break;
+			}
 
-  return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage: "url(https://source.unsplash.com/random)",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" mb={3}>
-            Sign up
-          </Typography>
+			default:
+				return;
+		}
+	};
 
-          {checkExistAcount ? (
-            ""
-          ) : (
-            <span style={styles.spanExistAcount}>
-              The username or email already exist.
-            </span>
-          )}
+	const getValue = event => {
+		const { name, value } = event.target;
+		const newValues = { ...state.values, [name]: value };
+		const newErrors = { ...state.errors };
 
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <TextField
-              autoFocus
-              onChange={getValue}
-              required
-              fullWidth
-              id="userName"
-              label="User Name"
-              name="userName"
-              autoComplete="userName"
-              error={state.errors.userName !== ""}
-              helperText={state.errors.userName}
-            />
+		validate(name, value, newErrors);
+		setState({ values: newValues, errors: newErrors });
+	};
 
-            {/* email */}
-            <TextField
-              onChange={getValue}
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              error={state.errors.email !== ""}
-              helperText={state.errors.email}
-            />
+	return (
+		<Grid container component='main' sx={{ height: '100vh' }}>
+			<Grid
+				item
+				xs={false}
+				sm={4}
+				md={7}
+				sx={{
+					backgroundImage: 'url(https://source.unsplash.com/random)',
+					backgroundRepeat: 'no-repeat',
+					backgroundColor: t =>
+						t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+				}}
+			/>
+			<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+				<Box
+					sx={{
+						my: 8,
+						mx: 4,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Avatar sx={{ m: 1, bgcolor: 'orange' }}></Avatar>
 
-            {/* password */}
-            <div style={{ position: "relative" }}>
-              <TextField
-                onChange={getValue}
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                id="password"
-                autoComplete="current-password"
-                error={state.errors.password !== ""}
-                helperText={state.errors.password}
-                value={state.values.password}
-              />
+					<Typography component='h1' variant='h5' mb={3}>
+						Sign up
+					</Typography>
 
-              <InputAdornment
-                sx={{ position: "absolute", right: "14px", top: "44px" }}
-              >
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            </div>
+					{checkExistAcount ? (
+						''
+					) : (
+						<span style={styles.spanExistAcount}>{textExistAcount}</span>
+					)}
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-          </form>
-        </Box>
-      </Grid>
-    </Grid>
-  );
+					<form onSubmit={handleSubmit} style={{ width: '100%' }}>
+						<TextField
+							autoFocus
+							onChange={getValue}
+							required
+							fullWidth
+							id='userName'
+							label='User Name'
+							name='userName'
+							autoComplete='userName'
+							error={state.errors.userName !== ''}
+							helperText={state.errors.userName}
+						/>
+
+						{/* email */}
+						<TextField
+							onChange={getValue}
+							margin='normal'
+							required
+							fullWidth
+							id='email'
+							label='Email Address'
+							name='email'
+							autoComplete='email'
+							error={state.errors.email !== ''}
+							helperText={state.errors.email}
+						/>
+
+						{/* password */}
+						<div style={{ position: 'relative' }}>
+							<TextField
+								onChange={getValue}
+								margin='normal'
+								required
+								fullWidth
+								name='password'
+								label='Password'
+								type={showPassword ? 'text' : 'password'}
+								id='password'
+								autoComplete='current-password'
+								error={state.errors.password !== ''}
+								helperText={state.errors.password}
+								value={state.values.password}
+							/>
+
+							<InputAdornment
+								sx={{ position: 'absolute', right: '14px', top: '44px' }}
+							>
+								<IconButton
+									aria-label='toggle password visibility'
+									onClick={handleClickShowPassword}
+									edge='end'
+								>
+									{showPassword ? <VisibilityOff /> : <Visibility />}
+								</IconButton>
+							</InputAdornment>
+						</div>
+
+						<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+							Sign Up
+						</Button>
+					</form>
+				</Box>
+			</Grid>
+		</Grid>
+	);
 }

@@ -4,8 +4,10 @@ export const URLS = {
 	login: 'login',
 	signUp: 'sign-up',
 	mainPage: 'main-page/*',
-	boardView: 'board',
+	boardView: ':projectId/board',
+	listView: ':projectId/list',
 	newProject: 'new-project',
 	verifyEmail: 'verify-email',
 	workspace: 'home/:workspaceId',
+	loading: 'loading'
 };

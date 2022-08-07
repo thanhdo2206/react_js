@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { List, ListItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import { mapOrder } from '../../utils/sort';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag } from '../../utils/dragDrop';
-import { updateDropTask } from '../../redux/actions/ProjectAction';
+import {
+	addTaskAction,
+	updateDropTask,
+} from '../../redux/actions/ProjectAction';
 import { useSelector, useDispatch } from 'react-redux';
 import Task from './Task';
+import FormNewTask from './FormNewTask';
 
 export default function ListTask(props) {
 	const dispatch = useDispatch();
 
-	const { section } = props;
+	const { section, isDisplayFormNewTaskTop, isDisplayFormNewTaskBottom } = props;
 
 	const listTask = mapOrder(section.tasks, section.taskOrder, 'task_id');
+
+	const handleSubmit = nameTask => {
+		dispatch(addTaskAction(nameTask, section.section_id));
+	};
+
+	const handleBlur = (nameTask) => {
+		dispatch(addTaskAction(nameTask, section.section_id));
+		// setDisplayFormNewTaskBottom(false);
+	};
 
 	const renderListTask = () => {
 		return listTask.map((task, index) => {
@@ -39,6 +52,11 @@ export default function ListTask(props) {
 	return (
 		<Box component='div' className='list__task-container'>
 			<List className='list__tasks'>
+				<FormNewTask
+					// handleSubmit={handleSubmit}
+					// handleBlur={handleBlur}
+					isDisplayFormAddTask={isDisplayFormNewTaskTop}
+				/>
 				<Container
 					// onDragStart={e => console.log('drag started', e)}
 					// onDragEnd={e => console.log('drag end', e)}
@@ -66,7 +84,11 @@ export default function ListTask(props) {
 					{renderListTask()}
 				</Container>
 
-				<Box className='btn__addTask'>+ Add Task</Box>
+				<FormNewTask
+					handleSubmit={handleSubmit}
+					handleBlur={handleBlur}
+					isDisplayFormAddTask={isDisplayFormNewTaskBottom}
+				/>
 			</List>
 		</Box>
 	);

@@ -4,7 +4,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { createProjectAction } from '../../redux/actions/WorkspaceAction';
+import { createProjectApi } from '../../redux/actions/ProjectAction';
+import Progress from '../../components/Progress/Progress';
 
 const PROJECT_NAME_REQUIRED = 'Project name is required.';
 
@@ -29,39 +30,51 @@ export default function BlankProject() {
 	const navigate = useNavigate();
 	const [projectName, setProjectName] = useState('');
 	const [errorRequired, setErrorRequired] = useState('');
+	const [isDisplayProgress, setDisplayProgress] = useState(false);
+
 	const dispatch = useDispatch();
 	const currentWorkSpace = useSelector(
 		state => state.WorkspaceReducer.currentWorkSpace
 	);
 
-	// console.log(currentWorkSpace);
+	const currentUser = useSelector(state => state.authReducer.currentUser);
+	
+
 	const handleSubmit = event => {
 		event.preventDefault();
+
 		if (!projectName.trim()) {
 			setErrorRequired(PROJECT_NAME_REQUIRED);
 			return;
 		}
 
+		setDisplayProgress(true);
+
 		dispatchProject(projectName);
 	};
 
-	const dispatchProject =  projectName => {
-		
-			navigate(-1);
-			dispatch(createProjectAction(projectName));
-			// navigate(`/main-page/home/${currentWorkSpace.workspace_id}`);
-			
-		
+	const dispatchProject = async projectName => {
+		//information to test api
+		const dataProject = {
+			projectName: projectName,
+			memberEmails: [currentUser.email],
+			Owner: currentUser.email,
+			worspaceId: currentWorkSpace._id,
+		};
+
+		await dispatch(createProjectApi(dataProject));
+
+		navigate(`/main-page/home/${currentWorkSpace._id}`);
 	};
 
 	const getValue = event => {
-		const {value } = event.target;
+		const { value } = event.target;
 		setProjectName(value);
-		
 	};
 
 	return (
 		<Box p={3}>
+			{isDisplayProgress && <Progress/>}
 			<IconButton
 				onClick={() => {
 					navigate(-1);
