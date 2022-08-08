@@ -3,10 +3,6 @@ import { mapOrder } from '../../utils/sort';
 
 import {
 	UPDATE_DROP_TASK,
-	ADD_SECTION,
-	EDIT_SECTION,
-	DELETE_SECTION,
-	ADD_SECTION_LEFT_RIGHT,
 	UPDATE_DROP_SECTION,
 	SET_CURRENT_PROJECT,
 	GET_ALL_PROJECT_API,
@@ -27,7 +23,6 @@ const ProjectReducer = (state = initialState, action) => {
 			return { ...state };
 		}
 		case SET_CURRENT_PROJECT: {
-			
 			state.currentProject = action.dataProject;
 
 			return { ...state };
@@ -36,21 +31,6 @@ const ProjectReducer = (state = initialState, action) => {
 			state.currentProject = {
 				...state.currentProject,
 				sectionOrder: action.newSectionOrder,
-			};
-
-			return { ...state };
-		}
-
-		case UPDATE_DROP_TASK: {
-			const { sections } = state.currentProject;
-			let sectionCurrent = sections.find(
-				section => section.section_id === action.sectionId
-			);
-			sectionCurrent.tasks = action.newTasks;
-			sectionCurrent.taskOrder = action.newTaskOrder;
-
-			state.currentProject = {
-				...state.currentProject,
 			};
 
 			return { ...state };

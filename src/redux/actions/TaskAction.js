@@ -1,7 +1,8 @@
 import { getAllTaskInProjectService } from '../../services/taskService';
 import {
 	GET_ALL_TASK_IN_PROJECT,
-	GET_ALL_TASK__ORDER_IN_PROJECT,
+	GET_ALL_TASK_ORDER_IN_PROJECT,
+    UPDATE_DROP_TASK,
 } from '../types/TaskTypes';
 
 export const getAllTaskInProjectApi = projectId => {
@@ -17,8 +18,20 @@ export const getAllTaskInProjectApi = projectId => {
 
 export const getAllTaskOrderAction = taskOrderInProject => {
 	let action = {
-		type: GET_ALL_TASK__ORDER_IN_PROJECT,
+		type: GET_ALL_TASK_ORDER_IN_PROJECT,
 		taskOrderInProject,
+	};
+
+	return action;
+};
+
+
+export const updateDropTask = (sectionIdDrop, taskDrag) => {
+	let action = {
+		type: UPDATE_DROP_TASK,
+		sectionIdDrop,
+		taskDrag,
+		
 	};
 
 	return action;

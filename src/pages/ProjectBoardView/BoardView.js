@@ -14,16 +14,19 @@ import ButtonAddSection from './ButtonAddSection';
 import Section from './Section';
 import { useParams } from 'react-router-dom';
 import { getAllSectionApi } from '../../redux/actions/SectionAction';
-import { getAllTaskInProjectApi, getAllTaskOrderAction } from '../../redux/actions/TaskAction';
+import {
+	getAllTaskInProjectApi,
+	getAllTaskOrderAction,
+} from '../../redux/actions/TaskAction';
 
 export default function BoardView() {
 	const { sectionOrder } = useSelector(
 		state => state.ProjectReducer.currentProject
 	);
 
-	// console.log('sectionOrder', sectionOrder);
-
 	const sections = useSelector(state => state.SectionReducer.arrSections);
+
+	const taskOrders = useSelector(state => state.SectionReducer.arrSections);
 
 	const dispatch = useDispatch();
 
@@ -35,12 +38,15 @@ export default function BoardView() {
 				await dispatch(getAllSectionApi(projectId));
 				await dispatch(getProjectApi(projectId));
 				await dispatch(getAllTaskInProjectApi(projectId));
-				dispatchArrTaskOrder()
 			}
 		}
 
 		fetchData();
 	}, [projectId]);
+
+	useEffect(() => {
+		dispatchArrTaskOrder();
+	}, [taskOrders]);
 
 	const sectionsSort =
 		sectionOrder && sectionOrder.length && sections
@@ -60,15 +66,15 @@ export default function BoardView() {
 		dispatch(updateDropSection(newSectionOrder));
 	};
 
-	const dispatchArrTaskOrder= () => {
+	const dispatchArrTaskOrder = () => {
 		const taskOrderInProject = sections.map(section => {
 			const sectionId = section._id;
 			const taskOrder = section.taskOrder;
 			return { sectionId, taskOrder };
 		});
 
-		dispatch(getAllTaskOrderAction(taskOrderInProject))
-	}
+		dispatch(getAllTaskOrderAction(taskOrderInProject));
+	};
 
 	const renderSections = () => {
 		return sectionsUnarchive.map((section, index) => {

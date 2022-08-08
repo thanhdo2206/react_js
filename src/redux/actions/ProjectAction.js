@@ -1,5 +1,5 @@
 import {
-	UPDATE_DROP_TASK,
+	
 	UPDATE_DROP_SECTION,
 	SET_CURRENT_PROJECT,
 	GET_ALL_PROJECT_API,
@@ -77,16 +77,7 @@ export const updateDropSection = newSectionOrder => {
 
 // móc data
 
-export const updateDropTask = (sectionId, newTaskOrder, newTasks) => {
-	let action = {
-		type: UPDATE_DROP_TASK,
-		newTaskOrder,
-		sectionId,
-		newTasks,
-	};
 
-	return action;
-};
 
 export const addTaskAction = (nameNewTask, sectionId) => {
 	let action = {

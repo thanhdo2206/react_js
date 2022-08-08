@@ -9,7 +9,7 @@ import authReducer from './reducers/authReducer';
 import toggleReducer from './reducers/toggleReducer';
 import reduxThunk from 'redux-thunk';
 
-const composedEnhances = composeWithDevTools();
+const composedEnhances = composeWithDevTools(applyMiddleware(reduxThunk));
 
 const rootReducer = combineReducers({
 	WorkspaceReducer,
@@ -22,7 +22,6 @@ const rootReducer = combineReducers({
 
 const store = createStore(
 	rootReducer,
-	applyMiddleware(reduxThunk),
 	composedEnhances
 );
 

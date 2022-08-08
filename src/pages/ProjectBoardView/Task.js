@@ -11,7 +11,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 export default function Task(props) {
 	const { task } = props;
 
-	const [nameTask, setnameTask] = useState(task.task_name);
+	const [nameTask, setnameTask] = useState(task.taskName);
 
 	const [isDisplaySpanTaskname, setIsDisplaySpanTaskname] = useState(true);
 
@@ -40,7 +40,7 @@ export default function Task(props) {
 								setIsDisplaySpanTaskname(false);
 							}}
 						>
-							{task.task_name}
+							{task.taskName}
 						</span>
 					) : (
 						<TextareaAutosize

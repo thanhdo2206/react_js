@@ -4,13 +4,11 @@ import Box from '@mui/material/Box';
 import { mapOrder } from '../../utils/sort';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag } from '../../utils/dragDrop';
-import {
-	addTaskAction,
-	updateDropTask,
-} from '../../redux/actions/ProjectAction';
+import { addTaskAction } from '../../redux/actions/ProjectAction';
 import { useSelector, useDispatch } from 'react-redux';
 import Task from './Task';
 import FormNewTask from './FormNewTask';
+import { updateDropTask } from '../../redux/actions/TaskAction';
 
 export default function ListTask(props) {
 	const dispatch = useDispatch();
@@ -19,15 +17,19 @@ export default function ListTask(props) {
 
 	const arrTaskInProject = useSelector(state => state.TaskReducer.arrTask);
 
-	const arrTaskInSection = arrTaskInProject.filter(task => task.sectionId === section._id);
+	const arrTaskInSection = arrTaskInProject.filter(
+		task => task.sectionId === section._id
+	);
 
 	// console.log(`arrTaskInSection ${section.sectionName}`,arrTaskInSection);
 
 	const arrTaskOrder = useSelector(state => state.TaskReducer.taskOrders);
 
-	// const listTask = mapOrder(section.tasks, section.taskOrder, 'task_id');
-	const listTask = [];
+	const taskOrderInSection = arrTaskOrder.filter(
+		item => item.sectionId === section._id
+	);
 
+	const listTask = mapOrder(arrTaskInSection, taskOrderInSection, '_id');
 
 	const handleSubmit = nameTask => {
 		dispatch(addTaskAction(nameTask, section.section_id));
@@ -41,7 +43,7 @@ export default function ListTask(props) {
 	const renderListTask = () => {
 		return listTask.map((task, index) => {
 			return (
-				<Draggable key={task.task_name}>
+				<Draggable key={task._id}>
 					<Task task={task} />
 				</Draggable>
 			);
@@ -50,12 +52,21 @@ export default function ListTask(props) {
 
 	const onTaskDrop = (dropResult, section) => {
 		const { removedIndex, addedIndex, payload } = dropResult;
-		if (removedIndex !== null || addedIndex !== null) {
-			let newTasks = applyDrag(section.tasks, dropResult);
+		console.log(dropResult)
+		if (removedIndex !== null) {
+			console.log('task drag',payload);
 
-			let newTaskOrder = newTasks.map(task => task.task_id);
+			// let newTasks = applyDrag(section.tasks, dropResult);
+			// console.log(payload);
+			// let newTaskOrder = newTasks.map(task => task.task_id);
+			// dispatch(updateDropTask(section.section_id, newTaskOrder, newTasks));
+		}
 
-			dispatch(updateDropTask(section.section_id, newTaskOrder, newTasks));
+		if (addedIndex !== null) {
+			console.log('section sau khi tha',section._id);
+			console.log('task drop',payload);
+			dispatch(updateDropTask(section._id,payload));
+
 		}
 	};
 
