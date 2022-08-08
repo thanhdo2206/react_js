@@ -27,6 +27,7 @@ const ProjectReducer = (state = initialState, action) => {
 			return { ...state };
 		}
 		case SET_CURRENT_PROJECT: {
+			
 			state.currentProject = action.dataProject;
 
 			return { ...state };
@@ -40,8 +41,6 @@ const ProjectReducer = (state = initialState, action) => {
 			return { ...state };
 		}
 
-
-		
 		case UPDATE_DROP_TASK: {
 			const { sections } = state.currentProject;
 			let sectionCurrent = sections.find(
@@ -57,78 +56,6 @@ const ProjectReducer = (state = initialState, action) => {
 			return { ...state };
 		}
 
-
-
-
-
-		case ADD_SECTION: {
-			let newSection = {
-				section_id: Date.now().toString(),
-				section_name: action.nameSection,
-				taskOrder: [],
-				tasks: [],
-			};
-
-			state.currentProject.sections.push(newSection);
-			state.currentProject.sectionOrder.push(newSection.section_id);
-
-			state.currentProject = {
-				...state.currentProject,
-			};
-
-			return { ...state };
-		}
-		case ADD_SECTION_LEFT_RIGHT: {
-			let { sections, sectionOrder } = state.currentProject;
-			let newSection = {
-				section_id: Date.now().toString(),
-				section_name: action.nameNewSection,
-				taskOrder: [],
-				tasks: [],
-			};
-
-			let indexSectionCurrent = sections.findIndex(
-				section => section.section_id === action.sectionId
-			);
-
-			let indexAddSection = indexSectionCurrent + action.checkLeftRight;
-
-			sections.push(newSection);
-			sectionOrder.splice(indexAddSection, 0, newSection.section_id);
-
-			state.currentProject = {
-				...state.currentProject,
-			};
-
-			return { ...state };
-		}
-		case EDIT_SECTION: {
-			const { sections } = state.currentProject;
-			let sectionEdit = sections.find(
-				section => section.section_id === action.sectionId
-			);
-			sectionEdit.section_name = action.newNameSection;
-
-			state.currentProject = {
-				...state.currentProject,
-			};
-
-			return { ...state };
-		}
-		case DELETE_SECTION: {
-			const { sections, sectionOrder } = state.currentProject;
-			let indexSectionEdit = sections.findIndex(
-				section => section.section_id === action.sectionId
-			);
-			sections.splice(indexSectionEdit, 1);
-			sectionOrder.splice(indexSectionEdit, 1);
-
-			state.currentProject = {
-				...state.currentProject,
-			};
-
-			return { ...state };
-		}
 		case 'ADD_TASK': {
 			const { sections } = state.currentProject;
 			const { tasks, taskOrder } = sections.find(

@@ -14,7 +14,7 @@ import {
 	MODAL_ACTION_CONFIRM,
 } from '../../constants/constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteSectionAction } from '../../redux/actions/ProjectAction';
+import { archiveSectionApi } from '../../redux/actions/SectionAction';
 
 export default function MoreOptionSection(props) {
 	const { section, renameSection, setAddFormSectionLeft, setAddFormSectionRight } =
@@ -39,9 +39,9 @@ export default function MoreOptionSection(props) {
 		setShowModalDelete(!isShowModalDelete);
 	};
 
-	const onModalDeleteSection = type => {
+	const onModalArchiveSection = type => {
 		if (type === MODAL_ACTION_CONFIRM) {
-			dispatch(deleteSectionAction(section.section_id));
+			dispatch(archiveSectionApi(section._id));
 		}
 
 		toggleModal();
@@ -108,20 +108,20 @@ export default function MoreOptionSection(props) {
 					onClick={toggleModal}
 				>
 					<DeleteOutlineIcon className='icon__option' />
-					Delete Section
+					Archive Section
 				</MenuItem>
 			</Menu>
 
 			<ConfirmModal
 				show={isShowModalDelete}
-				title='Delete this section'
+				title='Archive this section'
 				content={
 					<span>
-						Are you sure you want to delete this section <b>{section.section_name}</b>
+						Are you sure you want to archive this section <b>{section.sectionName}</b>
 						?
 					</span>
 				}
-				onAction={onModalDeleteSection}
+				onAction={onModalArchiveSection}
 				nameBtnConfirm='Archive section'
 			/>
 		</Box>

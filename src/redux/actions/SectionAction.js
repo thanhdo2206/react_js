@@ -1,6 +1,7 @@
 import { updateDropSectionService } from '../../services/projectService';
 import {
 	addSectionService,
+	archiveSectionService,
 	getAllSectionService,
 	updateTitleSectionService,
 } from '../../services/sectionService';
@@ -63,3 +64,10 @@ export const addSectionLeftRightApi = (
 		dispatch(getAllSectionApi(newSection.projectId));
 	};
 };
+
+export const archiveSectionApi = (sectionId)=>{
+	return async dispatch => {
+		const {data} = await archiveSectionService(sectionId);
+		dispatch(getAllSectionApi(data.projectId));
+	};
+}

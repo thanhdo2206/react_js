@@ -37,12 +37,14 @@ export default function BoardView() {
 		}
 
 		fetchData();
-	}, []);
+	}, [projectId]);
 
 	const sectionsSort =
 	sectionOrder && sectionOrder.length   && sections
 			? mapOrder(sections, sectionOrder, '_id')
 			: [];
+
+	const sectionsUnarchive = (sectionsSort.length) ? sectionsSort.filter(section => !section.archived) : [];
 
 	const onSectionDrop = dropResult => {
 		let newSections = applyDrag(sections, dropResult);
@@ -54,8 +56,8 @@ export default function BoardView() {
 	};
 
 	const renderSections = () => {
-		return sectionsSort.map((section, index) => {
-			const keyRender = `${section.sectionName} ${Date.now()}`;
+		return sectionsUnarchive.map((section, index) => {
+			const keyRender = `${section._id}}`;
 			return (
 				<Draggable key={keyRender}>
 					<Section section={section} indexSection={index} />

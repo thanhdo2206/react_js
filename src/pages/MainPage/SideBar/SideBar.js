@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
@@ -7,13 +7,16 @@ import { NavLink } from 'react-router-dom';
 import { DrawerHeader } from '../../../components/DrawerHeader/DrawerHeader';
 import { ListItemCustomize } from '../../../components/List/List';
 import { Avatar, AvatarGroup } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import UnarchiveProjects from './UnarchiveProjects';
 import ListOption from './ListOption';
 import { List, ListItem, ListItemText, Tooltip } from '@mui/material';
 import ArchiveProjects from './ArchiveProjects';
 import './SideBar.css';
+import { getWorkspaceById } from '../../../services/workspaceService';
+import { setCurrentWorkspaceAction } from '../../../redux/actions/WorkspaceAction';
+import { getAllProjectInWorkspaceApi } from '../../../redux/actions/ProjectAction';
 
 const styles = {
 	iconBtnClose: {
@@ -41,7 +44,38 @@ export default function SideBar(props) {
 		state => state.WorkspaceReducer.currentWorkSpace
 	);
 
+	const currentProject = useSelector(
+		state => state.ProjectReducer.currentProject
+	);
+
+	const dispatch = useDispatch();
+
+	
+
 	const { open, setOpen, drawerWidth } = props;
+
+	useEffect(() => {
+		async function fetchData() {
+		
+			if (currentProject._id) {
+				const result = await getWorkspaceById(currentProject.workspaceId);
+				dispatch(setCurrentWorkspaceAction(result.data));
+				dispatch(getAllProjectInWorkspaceApi(currentProject.workspaceId));
+			}
+		}
+		fetchData();
+	}, [currentProject]);
+
+	// const fetchData = async (currentProject)=>{
+	// 	const result = await getWorkspaceById(currentProject.workspaceId);
+	// 	dispatch(setCurrentWorkspaceAction(result.data));
+	// }
+
+	// if (currentProject._id) {
+	// 	console.log(1);
+	// 	// fetchData(currentProject);
+	// 	// dispatch(getAllProjectInWorkspaceApi(workspaceId));
+	// }
 
 	const handleDrawerClose = () => {
 		setOpen(false);

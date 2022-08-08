@@ -3,7 +3,6 @@ import FormNewSection from './FormNewSection';
 import Box from '@mui/material/Box';
 import ListTask from './ListTask';
 import BoardHeader from './BoardHeader';
-import { addSectionLeftRightAction } from '../../redux/actions/ProjectAction';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addSectionApi,
@@ -42,7 +41,7 @@ export default function Section(props) {
 		setLeftRight(1);
 	};
 
-	const handleAddSectionLeftRight = (sectionNameInput) => {
+	const handleAddSectionLeftRight = sectionNameInput => {
 		const newSection = {
 			sectionName: sectionNameInput,
 			taskOrder: [],
@@ -63,16 +62,7 @@ export default function Section(props) {
 			? 'Untitled section'
 			: nameSection;
 
-			handleAddSectionLeftRight(sectionNameInput);
-		// const newSection = {
-		// 	sectionName: sectionNameInput,
-		// 	taskOrder: [],
-		// 	projectId: _id,
-		// };
-
-		// let indexAddSection = indexSection + checkLeftRight;
-
-		// dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
+		handleAddSectionLeftRight(sectionNameInput);
 	};
 
 	const blurFormNewSection = nameSection => {

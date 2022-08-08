@@ -40,3 +40,17 @@ export const updateTitleSectionService = async dataSection =>{
 		// return error.response;
 	}
 }
+
+export const archiveSectionService = async sectionId =>{
+	try {
+		const respone = await requestApi({
+			method: 'put',
+			url: 'section/2',
+			data : {sectionId:sectionId}
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+		// return error.response;
+	}
+}
