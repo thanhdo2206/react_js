@@ -81,8 +81,8 @@ export const getProjectService = async projectId => {
 
 
 export const updateDropSectionService = async (newSectionOrder,projectId) => {
-	console.log('newSectionOrder',newSectionOrder);
-	console.log('projectId',projectId);
+	// console.log('newSectionOrder',newSectionOrder);
+	
 	try {
 		const respone = await requestApi({
 			method: 'put',

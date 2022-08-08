@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSectionAction } from '../../redux/actions/ProjectAction';
 import AddIcon from '@mui/icons-material/Add';
 import FormNewSection from './FormNewSection';
 import { addSectionApi } from '../../redux/actions/SectionAction';
@@ -11,17 +10,14 @@ export default function ButtonAddSection(props) {
 		state => state.ProjectReducer.currentProject
 	);
 
-	console.log('sectionOrder',sectionOrder);
 	const dispatch = useDispatch();
 
 	const [displayBtnAddSection, setDisplayBtnAddSection] = useState(true);
 
 	const addSection = async nameSection => {
-		let sectionNameInput = nameSection;
-
-		if (!nameSection.trim()) {
-			sectionNameInput = 'Untitled section';
-		}
+		const sectionNameInput = !nameSection.trim()
+			? 'Untitled section'
+			: nameSection;
 
 		const newSection = {
 			sectionName: sectionNameInput,
@@ -39,10 +35,8 @@ export default function ButtonAddSection(props) {
 	};
 
 	const handleBlur = nameSection => {
-		// if (nameSection.trim()) {
-		// 	dispatch(addSectionAction(nameSection));
-		// }
-		// setDisplayBtnAddSection(true);
+		addSection(nameSection);
+		setDisplayBtnAddSection(true);
 	};
 
 	return (

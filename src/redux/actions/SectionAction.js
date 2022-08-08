@@ -2,10 +2,15 @@ import { updateDropSectionService } from '../../services/projectService';
 import {
 	addSectionService,
 	getAllSectionService,
+	updateTitleSectionService,
 } from '../../services/sectionService';
-import { SET_CURRENT_PROJECT, UPDATE_DROP_SECTION } from '../types/ProjectTypes';
+
 import { GET_ALL_SECTION_API } from '../types/SectionTypes';
-import { getProjectApi, updateDropSection, updateDropSectionApi } from './ProjectAction';
+import {
+	getProjectApi,
+	updateDropSection,
+	updateDropSectionApi,
+} from './ProjectAction';
 
 export const getAllSectionApi = projectId => {
 	return async dispatch => {
@@ -20,23 +25,41 @@ export const getAllSectionApi = projectId => {
 	};
 };
 
-
-
-export const addSectionApi = (newSection) => {
+export const addSectionApi = newSection => {
 	return async dispatch => {
-		
 		const { data } = await addSectionService(newSection);
 
-		
-
 		// console.log(data);
-		await dispatch(getProjectApi((data.projectId)))
-		
-		
+		//to update sectionOrder after add section
+		await dispatch(getProjectApi(data.projectId));
 
 		dispatch(getAllSectionApi(newSection.projectId));
 	};
 };
 
+export const updateTitleSectionApi = dataSection => {
+	return async dispatch => {
+		const { data } = await updateTitleSectionService(dataSection);
 
+		dispatch(getAllSectionApi(data.projectId));
+	};
+};
 
+export const addSectionLeftRightApi = (
+	newSection,
+	sectionOrder,
+	indexAddSection
+) => {
+	return async dispatch => {
+		const newSectionOrder = [...sectionOrder];
+
+		const { data } = await addSectionService(newSection);
+
+		newSectionOrder.splice(indexAddSection, 0, data._id);
+
+		//to update sectionOrder after add section left right
+		await dispatch(updateDropSectionApi(newSectionOrder, data.projectId));
+
+		dispatch(getAllSectionApi(newSection.projectId));
+	};
+};

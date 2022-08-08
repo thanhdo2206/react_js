@@ -75,20 +75,11 @@ export const updateDropSection = newSectionOrder => {
 		type: UPDATE_DROP_SECTION,
 		newSectionOrder,
 	};
-	
 
 	return action;
 };
 
 // móc data
-export const setCurrentProjectAction = dataProject => {
-	let action = {
-		type: SET_CURRENT_PROJECT,
-		dataProject,
-	};
-
-	return action;
-};
 
 export const updateDropTask = (sectionId, newTaskOrder, newTasks) => {
 	let action = {
@@ -96,15 +87,6 @@ export const updateDropTask = (sectionId, newTaskOrder, newTasks) => {
 		newTaskOrder,
 		sectionId,
 		newTasks,
-	};
-
-	return action;
-};
-
-export const addSectionAction = nameSection => {
-	let action = {
-		type: ADD_SECTION,
-		nameSection,
 	};
 
 	return action;
@@ -120,16 +102,6 @@ export const addSectionLeftRightAction = (
 		nameNewSection,
 		sectionId,
 		checkLeftRight,
-	};
-
-	return action;
-};
-
-export const editTitleSectionAction = (newNameSection, sectionId) => {
-	let action = {
-		type: EDIT_SECTION,
-		newNameSection,
-		sectionId,
 	};
 
 	return action;

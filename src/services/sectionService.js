@@ -26,3 +26,17 @@ export const addSectionService = async newSection => {
 		// return error.response;
 	}
 };
+
+export const updateTitleSectionService = async dataSection =>{
+	try {
+		const respone = await requestApi({
+			method: 'put',
+			url: 'section/3',
+			data : {...dataSection}
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+		// return error.response;
+	}
+}

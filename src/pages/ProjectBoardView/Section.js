@@ -5,11 +5,19 @@ import ListTask from './ListTask';
 import BoardHeader from './BoardHeader';
 import { addSectionLeftRightAction } from '../../redux/actions/ProjectAction';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+	addSectionApi,
+	addSectionLeftRightApi,
+} from '../../redux/actions/SectionAction';
 
 export default function Section(props) {
-	const { section } = props;
+	const { section, indexSection } = props;
 
 	const dispatch = useDispatch();
+
+	const { sectionOrder, _id } = useSelector(
+		state => state.ProjectReducer.currentProject
+	);
 
 	const [isDisplayFormAddSectionLeft, setDisplayFormAddSectionLeft] =
 		useState(false);
@@ -34,33 +42,42 @@ export default function Section(props) {
 		setLeftRight(1);
 	};
 
+	const handleAddSectionLeftRight = (sectionNameInput) => {
+		const newSection = {
+			sectionName: sectionNameInput,
+			taskOrder: [],
+			projectId: _id,
+		};
+
+		let indexAddSection = indexSection + checkLeftRight;
+
+		dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
+	};
+
 	const addSectionRightLeft = (event, nameSection) => {
 		event.preventDefault();
 		setDisplayFormAddSectionLeft(false);
 		setDisplayFormAddSectionRight(false);
-		if (!nameSection.trim()) {
-			dispatch(
-				addSectionLeftRightAction(
-					'Untitled section',
-					section.section_id,
-					checkLeftRight
-				)
-			);
-			return;
-		}
 
-		if (checkLeftRight || checkLeftRight >= 0) {
-			dispatch(
-				addSectionLeftRightAction(nameSection, section.section_id, checkLeftRight)
-			);
-		}
+		const sectionNameInput = !nameSection.trim()
+			? 'Untitled section'
+			: nameSection;
+
+			handleAddSectionLeftRight(sectionNameInput);
+		// const newSection = {
+		// 	sectionName: sectionNameInput,
+		// 	taskOrder: [],
+		// 	projectId: _id,
+		// };
+
+		// let indexAddSection = indexSection + checkLeftRight;
+
+		// dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
 	};
 
 	const blurFormNewSection = nameSection => {
 		if (nameSection.trim()) {
-			dispatch(
-				addSectionLeftRightAction(nameSection, section.section_id, checkLeftRight)
-			);
+			handleAddSectionLeftRight(nameSection);
 		}
 
 		setDisplayFormAddSectionLeft(false);

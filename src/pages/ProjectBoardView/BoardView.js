@@ -9,11 +9,6 @@ import {
 	updateDropSection,
 	updateDropSectionApi,
 } from '../../redux/actions/ProjectAction';
-
-// import {
-// 	updateDropSection,
-// 	updateDropSectionApi,
-// } from '../../redux/actions/SectionAction';
 import { mapOrder } from '../../utils/sort';
 import ButtonAddSection from './ButtonAddSection';
 import Section from './Section';
@@ -24,6 +19,8 @@ export default function BoardView() {
 	const { sectionOrder } = useSelector(
 		state => state.ProjectReducer.currentProject
 	);
+
+	// console.log('sectionOrder', sectionOrder);
 
 	const sections = useSelector(state => state.SectionReducer.arrSections);
 
@@ -43,7 +40,9 @@ export default function BoardView() {
 	}, []);
 
 	const sectionsSort =
-		sectionOrder && sections ? mapOrder(sections, sectionOrder, '_id') : [];
+	sectionOrder && sectionOrder.length   && sections
+			? mapOrder(sections, sectionOrder, '_id')
+			: [];
 
 	const onSectionDrop = dropResult => {
 		let newSections = applyDrag(sections, dropResult);
@@ -59,7 +58,7 @@ export default function BoardView() {
 			const keyRender = `${section.sectionName} ${Date.now()}`;
 			return (
 				<Draggable key={keyRender}>
-					<Section section={section} />
+					<Section section={section} indexSection={index} />
 				</Draggable>
 			);
 		});

@@ -122,7 +122,7 @@ export default function MoreOptionSection(props) {
 					</span>
 				}
 				onAction={onModalDeleteSection}
-				nameBtnConfirm='Delete section'
+				nameBtnConfirm='Archive section'
 			/>
 		</Box>
 	);
