@@ -177,7 +177,7 @@ export default function IntergrationSection() {
 				<Slider {...settingsCarousel.carouselBottom}>
 					{cardItemProductBottom.map(item => {
 						return (
-							<div>
+							<div key={item.title}>
 								<Card
 									sx={{
 										width: 240,

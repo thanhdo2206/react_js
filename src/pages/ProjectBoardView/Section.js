@@ -99,11 +99,11 @@ export default function Section(props) {
 					section={section}
 					setNewTaskTop={setNewTaskTop}
 				></BoardHeader>
-				{/* <ListTask
+				<ListTask
 					isDisplayFormNewTaskTop={isDisplayFormNewTaskTop}
 					isDisplayFormNewTaskBottom={isDisplayFormNewTaskBottom}
 					section={section}
-				></ListTask> */}
+				></ListTask>
 				<Box className='btn__addTask' onClick={setNewTaskBottom}>
 					+ Add Task
 				</Box>

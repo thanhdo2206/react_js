@@ -14,6 +14,7 @@ import ButtonAddSection from './ButtonAddSection';
 import Section from './Section';
 import { useParams } from 'react-router-dom';
 import { getAllSectionApi } from '../../redux/actions/SectionAction';
+import { getAllTaskInProjectApi, getAllTaskOrderAction } from '../../redux/actions/TaskAction';
 
 export default function BoardView() {
 	const { sectionOrder } = useSelector(
@@ -32,7 +33,9 @@ export default function BoardView() {
 		async function fetchData() {
 			if (projectId) {
 				await dispatch(getAllSectionApi(projectId));
-				dispatch(getProjectApi(projectId));
+				await dispatch(getProjectApi(projectId));
+				await dispatch(getAllTaskInProjectApi(projectId));
+				dispatchArrTaskOrder()
 			}
 		}
 
@@ -40,11 +43,13 @@ export default function BoardView() {
 	}, [projectId]);
 
 	const sectionsSort =
-	sectionOrder && sectionOrder.length   && sections
+		sectionOrder && sectionOrder.length && sections
 			? mapOrder(sections, sectionOrder, '_id')
 			: [];
 
-	const sectionsUnarchive = (sectionsSort.length) ? sectionsSort.filter(section => !section.archived) : [];
+	const sectionsUnarchive = sectionsSort.length
+		? sectionsSort.filter(section => !section.archived)
+		: [];
 
 	const onSectionDrop = dropResult => {
 		let newSections = applyDrag(sections, dropResult);
@@ -54,6 +59,16 @@ export default function BoardView() {
 		dispatch(updateDropSectionApi(newSectionOrder, projectId));
 		dispatch(updateDropSection(newSectionOrder));
 	};
+
+	const dispatchArrTaskOrder= () => {
+		const taskOrderInProject = sections.map(section => {
+			const sectionId = section._id;
+			const taskOrder = section.taskOrder;
+			return { sectionId, taskOrder };
+		});
+
+		dispatch(getAllTaskOrderAction(taskOrderInProject))
+	}
 
 	const renderSections = () => {
 		return sectionsUnarchive.map((section, index) => {

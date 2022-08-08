@@ -17,8 +17,6 @@ export const getAllSectionApi = projectId => {
 	return async dispatch => {
 		const { data } = await getAllSectionService(projectId);
 
-		// console.log('data',data);
-
 		dispatch({
 			type: GET_ALL_SECTION_API,
 			dataSection: data,
@@ -65,9 +63,9 @@ export const addSectionLeftRightApi = (
 	};
 };
 
-export const archiveSectionApi = (sectionId)=>{
+export const archiveSectionApi = sectionId => {
 	return async dispatch => {
-		const {data} = await archiveSectionService(sectionId);
+		const { data } = await archiveSectionService(sectionId);
 		dispatch(getAllSectionApi(data.projectId));
 	};
-}
+};

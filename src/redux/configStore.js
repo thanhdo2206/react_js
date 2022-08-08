@@ -3,6 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import ProjectReducer from './reducers/ProjectReducer';
 import WorkspaceReducer from './reducers/WorkspaceReducer';
 import SectionReducer from './reducers/SectionReducer';
+import TaskReducer from './reducers/TaskReducer';
+
 import authReducer from './reducers/authReducer';
 import toggleReducer from './reducers/toggleReducer';
 import reduxThunk from 'redux-thunk';
@@ -15,6 +17,7 @@ const rootReducer = combineReducers({
 	SectionReducer,
 	authReducer,
 	toggleReducer,
+	TaskReducer
 });
 
 const store = createStore(

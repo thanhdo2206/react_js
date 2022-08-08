@@ -1,9 +1,5 @@
 import {
 	UPDATE_DROP_TASK,
-	ADD_SECTION,
-	EDIT_SECTION,
-	DELETE_SECTION,
-	ADD_SECTION_LEFT_RIGHT,
 	UPDATE_DROP_SECTION,
 	SET_CURRENT_PROJECT,
 	GET_ALL_PROJECT_API,
@@ -87,30 +83,6 @@ export const updateDropTask = (sectionId, newTaskOrder, newTasks) => {
 		newTaskOrder,
 		sectionId,
 		newTasks,
-	};
-
-	return action;
-};
-
-export const addSectionLeftRightAction = (
-	nameNewSection,
-	sectionId,
-	checkLeftRight
-) => {
-	let action = {
-		type: ADD_SECTION_LEFT_RIGHT,
-		nameNewSection,
-		sectionId,
-		checkLeftRight,
-	};
-
-	return action;
-};
-
-export const deleteSectionAction = sectionId => {
-	let action = {
-		type: DELETE_SECTION,
-		sectionId,
 	};
 
 	return action;

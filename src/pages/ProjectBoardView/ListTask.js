@@ -17,13 +17,23 @@ export default function ListTask(props) {
 
 	const { section, isDisplayFormNewTaskTop, isDisplayFormNewTaskBottom } = props;
 
-	const listTask = mapOrder(section.tasks, section.taskOrder, 'task_id');
+	const arrTaskInProject = useSelector(state => state.TaskReducer.arrTask);
+
+	const arrTaskInSection = arrTaskInProject.filter(task => task.sectionId === section._id);
+
+	// console.log(`arrTaskInSection ${section.sectionName}`,arrTaskInSection);
+
+	const arrTaskOrder = useSelector(state => state.TaskReducer.taskOrders);
+
+	// const listTask = mapOrder(section.tasks, section.taskOrder, 'task_id');
+	const listTask = [];
+
 
 	const handleSubmit = nameTask => {
 		dispatch(addTaskAction(nameTask, section.section_id));
 	};
 
-	const handleBlur = (nameTask) => {
+	const handleBlur = nameTask => {
 		dispatch(addTaskAction(nameTask, section.section_id));
 		// setDisplayFormNewTaskBottom(false);
 	};
