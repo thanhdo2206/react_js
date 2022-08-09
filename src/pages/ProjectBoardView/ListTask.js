@@ -21,15 +21,21 @@ export default function ListTask(props) {
 		task => task.sectionId === section._id
 	);
 
-	// console.log(`arrTaskInSection ${section.sectionName}`,arrTaskInSection);
+	// console.log(`arrTaskInSection ${section.sectionName}`, arrTaskInSection);
 
 	const arrTaskOrder = useSelector(state => state.TaskReducer.taskOrders);
 
-	const taskOrderInSection = arrTaskOrder.filter(
-		item => item.sectionId === section._id
-	);
+	// console.log('arrTaskOrder',arrTaskOrder);
+	const taskOrderInSection = arrTaskOrder
+		? arrTaskOrder.find(item => item.sectionId === section._id)
+		: {};
 
-	const listTask = mapOrder(arrTaskInSection, taskOrderInSection, '_id');
+	// console.log('arrTaskOrderInSection', taskOrder);
+
+	const listTask =
+		taskOrderInSection && taskOrderInSection.taskOrder.length && arrTaskInSection
+			? mapOrder(arrTaskInSection, taskOrderInSection.taskOrder, '_id')
+			: [];
 
 	const handleSubmit = nameTask => {
 		dispatch(addTaskAction(nameTask, section.section_id));
@@ -52,9 +58,10 @@ export default function ListTask(props) {
 
 	const onTaskDrop = (dropResult, section) => {
 		const { removedIndex, addedIndex, payload } = dropResult;
-		console.log(dropResult)
+
 		if (removedIndex !== null) {
-			console.log('task drag',payload);
+			// console.log('task drag',payload);
+			console.log('section truoc khi tha', section._id);
 
 			// let newTasks = applyDrag(section.tasks, dropResult);
 			// console.log(payload);
@@ -63,10 +70,9 @@ export default function ListTask(props) {
 		}
 
 		if (addedIndex !== null) {
-			console.log('section sau khi tha',section._id);
-			console.log('task drop',payload);
-			dispatch(updateDropTask(section._id,payload));
-
+			console.log('section sau khi tha', section._id);
+			// console.log('task drop',payload);
+			dispatch(updateDropTask(section._id, payload));
 		}
 	};
 

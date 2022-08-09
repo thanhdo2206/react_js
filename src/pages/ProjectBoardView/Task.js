@@ -3,10 +3,10 @@ import { List, ListItem } from '@mui/material';
 import MoreOptionTask from './MoreOptionTask';
 import Box from '@mui/material/Box';
 import { TooltipCustomize } from '../../components/ToolTip/ToolTip';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import CompleteTask from './CompleteTask';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import BoxAssignTask from './BoxAssignTask';
+import BoxDueDate from './BoxDueDate';
 
 export default function Task(props) {
 	const { task } = props;
@@ -61,14 +61,10 @@ export default function Task(props) {
 				<MoreOptionTask renameTask={renameTask} />
 			</Box>
 
-			<Box>
-				<TooltipCustomize title='Assign task' placement='bottom'>
-					<PersonOutlineOutlinedIcon className='icon__assign__date' />
-				</TooltipCustomize>
+			<Box sx={{ display: 'flex', alignItems: 'center' }}>
+				<BoxAssignTask task={task} />
 
-				<TooltipCustomize title='Add due date' placement='bottom'>
-					<CalendarTodayOutlinedIcon className='icon__assign__date' />
-				</TooltipCustomize>
+				<BoxDueDate task={task} />
 			</Box>
 		</ListItem>
 	);

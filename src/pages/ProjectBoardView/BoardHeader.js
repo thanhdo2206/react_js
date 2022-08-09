@@ -52,6 +52,7 @@ export default function BoardHeader(props) {
 				onSubmit={e => {
 					e.preventDefault();
 					editTitleSection();
+					titleSectionRef.current.blur();
 				}}
 				onBlur={editTitleSection}
 			>

@@ -8,7 +8,7 @@ export default function CompleteTask(props) {
 	const { task } = props;
 	return (
 		<Box className='box__complete-task'>
-			{task.status ? (
+			{task.taskStatus ? (
 				<TooltipCustomize title='Mark task incomplete' placement='bottom'>
 					<CheckCircleIcon className='icon__checkCircle icon__complete' />
 				</TooltipCustomize>

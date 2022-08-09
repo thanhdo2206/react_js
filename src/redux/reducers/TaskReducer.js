@@ -20,7 +20,7 @@ const TaskReducer = (state = initialState, action) => {
 		case UPDATE_DROP_TASK: {
 			
             const taskDrag = state.arrTask.find((task) => task._id === action.taskDrag._id);
-			console.log(taskDrag);
+			
             taskDrag.sectionId = action.sectionIdDrop;
 
             state.arrTask = [...state.arrTask];
