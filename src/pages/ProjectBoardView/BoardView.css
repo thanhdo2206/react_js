@@ -199,7 +199,7 @@ body::-webkit-scrollbar {
 }
 
 .icon__option.css-i4bv87-MuiSvgIcon-root {
-	font-size: 20px;
+	font-size: 16px;
 	margin-right: 4px;
 	/* stroke: black; */
 	-webkit-text-stroke: 1px white;
@@ -379,12 +379,4 @@ body::-webkit-scrollbar {
 .dueDate__value.css-ahj2mt-MuiTypography-root {
 	font-size: 12px;
 	color: var(--color-text-weak);
-}
-
-.assignee__board {
-	
-}
-
-.assignee__board > .dropItem__block--assigneehidden {
-	
 }

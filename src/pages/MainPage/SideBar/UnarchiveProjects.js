@@ -5,7 +5,7 @@ import ButtonMore from './ButtonMore';
 import { NavLink } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
 import { getProjectApi } from '../../../redux/actions/ProjectAction';
-
+import WorkIcon from '@mui/icons-material/Work';
 
 const styles = {
 	boxProjectContainer: {
@@ -54,7 +54,8 @@ export default function UnarchiveProjects() {
 							}}
 						>
 							<Box sx={styles.boxProjectContainer}>
-								<div style={styles.boxProject}></div>
+								
+								<WorkIcon sx={{fontSize:'16px',marginRight: '10px'}}/>
 								<ListItemText
 									sx={{
 										'& .css-10hburv-MuiTypography-root': { fontSize: '12px' },

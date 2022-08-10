@@ -102,3 +102,21 @@ export const updateDropSectionService = async (newSectionOrder,projectId) => {
 	}
 };
 
+
+export const updateTitleProjectService = async dataProject => {
+	try {
+		const respone = await requestApi({
+			method: 'patch',
+			url: 'ps/project/1',
+			data: {
+				projectName : dataProject.projectName,
+				projectId : dataProject._id
+			}
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+
+		// return error.response;
+	}
+};

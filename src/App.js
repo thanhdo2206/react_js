@@ -26,7 +26,6 @@ function App() {
 					<Route path={URLS.login} element={<LoginPage />} />
 					<Route path={URLS.mainPage} element={<MainPage />}>
 						<Route path={URLS.workspace} element={<Home />} />
-						<Route path={URLS.myTask} element={<MyTask />} />
 						<Route path={URLS.boardView} element={<BoardView />} />
 						<Route path=':projectId/list' element={<ProjectListView />} />
 					</Route>

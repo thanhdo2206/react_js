@@ -34,3 +34,31 @@
 	font-size: 14px;
 	border: none !important;
 }
+
+.label__projectName {
+	font-size: 14px;
+	color: #6d6e6f;
+}
+
+.input__projectName {
+	width: 98%;
+	padding: 6px 0px 6px 12px;
+	
+
+	margin-top: 10px;
+	border-radius: 5px;
+	border: 1px solid #cbcbcb;
+	font-size: 16px;
+	color: #1e1f21;
+}
+
+.input__projectName:hover{
+	border: 1px solid #6d6e6f;
+
+}
+
+.input__projectName:focus {
+	outline: 2px solid #2f4edacc;
+	border: 1px solid #6d6e6f;
+
+}

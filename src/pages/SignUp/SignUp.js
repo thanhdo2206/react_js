@@ -57,9 +57,6 @@ export default function SignUp() {
 		let indexError = Object.values(state.errors).findIndex(error => error !== '');
 
 		if (indexError === -1) {
-			// console.log("dk thanh cong");
-			// navigate("/verify-email");
-
 			let values = { ...state.values };
 			registerApi(values);
 		}

@@ -6,6 +6,8 @@ import MenuItem from '@mui/material/MenuItem';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+
 
 export default function MoreOptionTask(props) {
 	const { renameTask } = props;
@@ -59,8 +61,9 @@ export default function MoreOptionTask(props) {
 				</MenuItem>
 
 				<MenuItem className='menu__option-item delete__section-task'>
-					<DeleteOutlineIcon className='icon__option' />
-					Delete task
+					<Inventory2OutlinedIcon className='icon__option' />
+
+					Archive task
 				</MenuItem>
 			</Menu>
 		</Box>
