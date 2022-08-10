@@ -381,25 +381,10 @@ body::-webkit-scrollbar {
 	color: var(--color-text-weak);
 }
 
-.dueDate__board{
-	z-index: 5;
-	position: fixed;
-}
-
-.dueDate__board > .dueDate__block {
-	/* position: fixed;
-	top: 322px; */
-	top: 4px;
-	left: 0px;
-}
-
 .assignee__board {
-	/* position: relative; */
-	z-index: 5;
-	position: fixed;
+	
 }
 
 .assignee__board > .dropItem__block--assigneehidden {
-	top: 4px;
-	left: 0px;
+	
 }

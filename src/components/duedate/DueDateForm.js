@@ -4,6 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { Box, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import './dueDateForm.css';
 import { convertDateFromDataBase, showDateInDateInput } from '../../utils/date';
@@ -11,11 +13,11 @@ import ButtonProjectList from '../../components/ButtonProjectList/ButtonProjectL
 import { setDateTaskApi } from '../../redux/actions/TaskAction';
 
 export default function DueDateForm(props) {
-	const { dropDueDate, startDate, dueDate, task,handleClickAwayDueDate } = props;
+	const { dropDueDate, startDate, dueDate, task, handleCloseDueDate } = props;
 
 	const dispatch = useDispatch();
 
-	const [isFocusDueDate, setIsFocusDueDate] = useState(true);
+	const [isFocusDueDate, setIsFocusDueDate] = useState(false);
 
 	const [startDateCalendar, setStartDateCalendar] = useState(
 		convertDateFromDataBase(startDate)
@@ -25,23 +27,24 @@ export default function DueDateForm(props) {
 	);
 
 	const handleClickStartDate = () => {
-		setIsFocusDueDate(true);
+		setIsFocusDueDate(false);
 	};
 
 	const handleClickDueDate = () => {
-		setIsFocusDueDate(false);
+		setIsFocusDueDate(true);
 	};
 
 	const handleChangeDueDate = value => {
 		const newDueDate = showDateInDateInput(value.toString().slice(0, 15));
 
-		if (isFocusDueDate) {
+		if (!isFocusDueDate) {
 			setStartDateCalendar(newDueDate);
-			setIsFocusDueDate(false);
+			setIsFocusDueDate(true);
 			return;
 		}
+
 		setDueDateCalendar(newDueDate);
-		setIsFocusDueDate(true);
+		setIsFocusDueDate(false);
 	};
 
 	const handleClickClearAll = () => {
@@ -50,13 +53,22 @@ export default function DueDateForm(props) {
 	};
 
 	const handleSubmitDate = () => {
-		const taskUpdate = {
+		let taskUpdate = {
 			...task,
 			startDate: startDateCalendar,
 			dueDate: dueDateCalendar,
 		};
-		handleClickAwayDueDate();
+
+		if (!dueDateCalendar) {
+			taskUpdate = {
+				...task,
+				startDate: '',
+				dueDate: startDateCalendar,
+			};
+		}
+
 		dispatch(setDateTaskApi(taskUpdate));
+		handleCloseDueDate();
 	};
 
 	return (
@@ -71,7 +83,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (isFocusDueDate) {
+						if (!isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';
@@ -86,7 +98,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (!isFocusDueDate) {
+						if (isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';

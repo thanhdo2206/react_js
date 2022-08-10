@@ -39,7 +39,7 @@ export const updateTaskService = async task => {
 			priorityValue: task.priorityValue,
 			sectionId: task.sectionId,
 		};
-		console.log("taskUpdate trong service",taskUpdate);
+		
 		const respone = await requestApi({
 			method: 'put',
 			url: `task/${task._id}`,

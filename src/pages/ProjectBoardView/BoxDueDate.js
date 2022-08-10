@@ -4,6 +4,7 @@ import { TooltipCustomize } from '../../components/ToolTip/ToolTip';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import DueDateForm from '../../components/duedate/DueDateForm';
 import { showDate } from '../../utils/date';
+import Popover from '@mui/material/Popover';
 
 export default function BoxDueDate(props) {
 	const { task } = props;
@@ -12,44 +13,62 @@ export default function BoxDueDate(props) {
 	const valueStartDate = startDate !== null ? startDate : '';
 	const valueDueDate = dueDate !== null ? dueDate : '';
 
-	const [isOpenDueDate, setOpenDueDate] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
 
-	const handleOpenDueDate = () => {
-		setOpenDueDate(true);
+	const handleOpenPopover = event => {
+		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClickAwayDueDate = () => {
-        
-		setOpenDueDate(false);
+	const handleClosePopover = () => {
+		setAnchorEl(null);
 	};
+
+	const open = Boolean(anchorEl);
 
 	return (
-		<ClickAwayListener onClickAway={handleClickAwayDueDate}>
-			<Box sx={{ position: 'relative' }}>
-				<Box onClick={handleOpenDueDate}>
-					<TooltipCustomize title='Add due date' placement='bottom'>
-						<Box sx={{ display: 'flex' }}>
-							{valueStartDate || valueDueDate ? (
-								<Typography className='dueDate__value'>
-									{showDate(startDate, dueDate)}
-								</Typography>
-							) : (
-								<CalendarTodayOutlinedIcon className='icon__assign__date' />
-							)}
-						</Box>
-					</TooltipCustomize>
-				</Box>
+		<Box>
+			<Box
+				aria-describedby='dueDate__box'
+				variant='contained'
+				onClick={handleOpenPopover}
+			>
+				<TooltipCustomize title='Add due date' placement='bottom'>
+					<Box sx={{ display: 'flex' }}>
+						{valueStartDate || valueDueDate ? (
+							<Typography className='dueDate__value'>
+								{showDate(startDate, dueDate)}
+							</Typography>
+						) : (
+							<CalendarTodayOutlinedIcon className='icon__assign__date' />
+						)}
+					</Box>
+				</TooltipCustomize>
+			</Box>
 
+			<Popover
+				id={open ? 'dueDate__box' : undefined}
+				open={open}
+				anchorEl={anchorEl}
+				onClose={handleClosePopover}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
 				<Box className='dueDate__board'>
 					<DueDateForm
-						dropDueDate={isOpenDueDate}
+						dropDueDate={true}
 						startDate={valueStartDate}
 						dueDate={valueDueDate}
-                        task={task}
-                        handleClickAwayDueDate={handleClickAwayDueDate}
+						task={task}
+						handleCloseDueDate={handleClosePopover}
 					/>
 				</Box>
-			</Box>
-		</ClickAwayListener>
+			</Popover>
+		</Box>
 	);
 }

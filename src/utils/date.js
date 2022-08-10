@@ -16,7 +16,7 @@ export const showDateInDateInput = value => {
 	if (value) {
 		const day = value.slice(8, 10);
 		const month = value.slice(4, 7);
-		const year = value.slice(11,15);
+		const year = value.slice(11, 15);
 		const newMonth = monthAbbreviate.indexOf(month).toString();
 		const date = `${year}-0${newMonth}-${day}`;
 		return date;
@@ -40,7 +40,19 @@ export const convertDateToValue = value => {
 };
 
 export const showDate = (startDate, dueDate) => {
-	if (startDate || dueDate) {
+	if (startDate && !dueDate) {
+		const valueStartDate = convertDateToValue(startDate);
+
+		return valueStartDate;
+	}
+
+	if (!startDate && dueDate) {
+		const valueDueDate = convertDateToValue(dueDate);
+
+		return valueDueDate;
+	}
+
+	if (startDate && dueDate) {
 		const valueStartDate = convertDateToValue(startDate);
 		const valueDueDate = convertDateToValue(dueDate);
 

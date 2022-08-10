@@ -28,7 +28,6 @@ export default function AssigneeForm(props) {
 							<Box className='col__block--typography'>
 								<Typography className='col__typography col__typo--userName'>
 									{username}
-									{/* {`${username.slice(0, 1).toUpperCase()}${username.slice(1, 4)}`} */}
 								</Typography>
 								<Typography className='col__typography col_typo--email'>
 									{email}
@@ -37,7 +36,6 @@ export default function AssigneeForm(props) {
 						</Box>
 					);
 				})}
-				{/* <p>Thanh</p> */}
 			</Box>
 		</Box>
 	);

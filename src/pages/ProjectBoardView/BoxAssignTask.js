@@ -7,6 +7,7 @@ import AvatarAssignee from '../../components/assignee/AvatarAssignee';
 import { useSelector, useDispatch } from 'react-redux';
 import { assignTaskApi } from '../../redux/actions/TaskAction';
 import { convertDateFromDataBase } from '../../utils/date';
+import Popover from '@mui/material/Popover';
 
 export default function BoxAssignTask(props) {
 	const { task } = props;
@@ -16,8 +17,6 @@ export default function BoxAssignTask(props) {
 	// const { _id, username, email } = task.assigneTo;
 	const username = task.assigneTo !== null ? task.assigneTo.username : '';
 
-	const [isOpenAssignee, setOpenAssignee] = useState(false);
-
 	const currentWorkSpace = useSelector(
 		state => state.WorkspaceReducer.currentWorkSpace
 	);
@@ -25,48 +24,68 @@ export default function BoxAssignTask(props) {
 	const membersWorkspace =
 		currentWorkSpace && currentWorkSpace.members ? currentWorkSpace.members : [];
 
-	const handleOpenCloseAssignee = () => {
-		setOpenAssignee(!isOpenAssignee);
-	};
-
-	const handleClickAwayAssignee = () => {
-		setOpenAssignee(false);
-	};
-
-	const handleAssigneeMember = member => {
+	const handleAssigneeMember =async member => {
 		const taskUpdate = {
 			...task,
 			assigneTo: { ...task.assigneTo, email: member.email },
 		};
 
-		setOpenAssignee(false);
-		dispatch(assignTaskApi(taskUpdate));
+		
+		await dispatch(assignTaskApi(taskUpdate));
+		handleClosePopover();
 	};
 
-	return (
-		<ClickAwayListener onClickAway={handleClickAwayAssignee}>
-			<Box sx={{ display: 'inline-block' }}>
-				<TooltipCustomize title='Assign task' placement='bottom'>
-					<Box
-						onClick={handleOpenCloseAssignee}
-						sx={{ marginRight: '8px', display: 'flex' }}
-					>
-						{!username ? (
-							<PersonOutlineOutlinedIcon className='icon__assign__date' />
-						) : (
-							<AvatarAssignee assignee={username} />
-						)}
-					</Box>
-				</TooltipCustomize>
+	const [anchorEl, setAnchorEl] = useState(null);
 
+	const handleOpenPopover = event => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClosePopover = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+
+	return (
+		<Box sx={{ display: 'inline-block' }}>
+			<TooltipCustomize title='Assign task' placement='bottom'>
+				<Box
+					onClick={handleOpenPopover}
+					aria-describedby='assignTask__box'
+					variant='contained'
+					sx={{ marginRight: '8px', display: 'flex' }}
+				>
+					{!username ? (
+						<PersonOutlineOutlinedIcon className='icon__assign__date' />
+					) : (
+						<AvatarAssignee assignee={username} />
+					)}
+				</Box>
+			</TooltipCustomize>
+
+			<Popover
+				id={open ? 'assignTask__box' : undefined}
+				open={open}
+				anchorEl={anchorEl}
+				onClose={handleClosePopover}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
 				<Box className='assignee__board'>
 					<AssigneeForm
 						memberArr={membersWorkspace}
 						onClickAssignee={handleAssigneeMember}
-						isDrop={isOpenAssignee}
+						isDrop={true}
 					/>
 				</Box>
-			</Box>
-		</ClickAwayListener>
+			</Popover>
+		</Box>
 	);
 }

@@ -39,11 +39,13 @@ export const updateDropTask = (sectionIdDrop, taskDrag) => {
 	return action;
 };
 
-export const assignTaskApi = (taskUpdate) => {
+export const assignTaskApi = taskUpdate => {
 	return async dispatch => {
-		console.log("taskUpdate trong action",taskUpdate)
-		// const { data } = await assignTaskService(taskUpdate, taskUpdateId);
+		// console.log('taskUpdate trong action', taskUpdate);
+
 		const { data } = await updateTaskService(taskUpdate);
+		console.log('taskUpdate sau khi goi api', data);
+
 
 		dispatch(getAllTaskInProjectApi(data.projectId));
 	};
