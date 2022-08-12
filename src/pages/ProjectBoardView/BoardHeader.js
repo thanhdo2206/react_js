@@ -12,7 +12,7 @@ export default function BoardHeader(props) {
 		section,
 		setAddFormSectionLeft,
 		setAddFormSectionRight,
-		setNewTaskTop,
+		openNewTaskFormTop,
 	} = props;
 
 	const titleSectionRef = useRef(null);
@@ -76,7 +76,7 @@ export default function BoardHeader(props) {
 					className='btnOption'
 					fontSize='small'
 					onClick={() => {
-						setNewTaskTop();
+						openNewTaskFormTop();
 					}}
 				/>
 			</TooltipCustomize>

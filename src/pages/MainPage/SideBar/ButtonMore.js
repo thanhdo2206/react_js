@@ -117,7 +117,7 @@ export default function ButtonMore(props) {
 							handleArchive(false, project._id);
 						}}
 					>
-						<UnarchiveOutlinedIcon sx={{ fontSize: '14px', marginRight: '5px' }} />
+						<UnarchiveOutlinedIcon sx={{ fontSize: '14px', marginRight: '9px' }} />
 						Unarchive Project
 					</MenuItem>
 				) : (

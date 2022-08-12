@@ -4,8 +4,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 import { Box, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 
 import './dueDateForm.css';
 import { convertDateFromDataBase, showDateInDateInput } from '../../utils/date';
@@ -13,7 +11,7 @@ import ButtonProjectList from '../../components/ButtonProjectList/ButtonProjectL
 import { setDateTaskApi } from '../../redux/actions/TaskAction';
 
 export default function DueDateForm(props) {
-	const { dropDueDate, startDate, dueDate, task, handleCloseDueDate } = props;
+	const {startDate, dueDate, task,onClosePopover } = props;
 
 	const dispatch = useDispatch();
 
@@ -68,11 +66,13 @@ export default function DueDateForm(props) {
 		}
 
 		dispatch(setDateTaskApi(taskUpdate));
-		handleCloseDueDate();
+		onClosePopover();
 	};
 
+	
+
 	return (
-		<Box display={dropDueDate ? 'flex' : 'none'} className='dueDate__block'>
+		<Box className='dueDate__block'>
 			<Box className='header__block--input'>
 				<TextField
 					onClick={handleClickStartDate}
@@ -83,7 +83,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (!isFocusDueDate) {
+						if (isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';
@@ -98,7 +98,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (isFocusDueDate) {
+						if (!isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';

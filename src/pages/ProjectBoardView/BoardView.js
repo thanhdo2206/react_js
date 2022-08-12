@@ -40,7 +40,6 @@ export default function BoardView() {
 				await dispatch(getAllTaskInProjectApi(projectId));
 			}
 		}
-
 		fetchData();
 	}, [projectId]);
 
@@ -58,12 +57,15 @@ export default function BoardView() {
 		: [];
 
 	const onSectionDrop = dropResult => {
-		let newSections = applyDrag(sections, dropResult);
+		const { removedIndex, addedIndex, payload } = dropResult;
+		if (removedIndex !== null || addedIndex !== null) {
+			let newSections = applyDrag(sections, dropResult);
 
-		let newSectionOrder = newSections.map(section => section._id);
+			let newSectionOrder = newSections.map(section => section._id);
 
-		dispatch(updateDropSectionApi(newSectionOrder, projectId));
-		dispatch(updateDropSection(newSectionOrder));
+			dispatch(updateDropSectionApi(newSectionOrder, projectId));
+			dispatch(updateDropSection(newSectionOrder));
+		}
 	};
 
 	const dispatchArrTaskOrder = () => {

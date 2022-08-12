@@ -260,6 +260,10 @@ body::-webkit-scrollbar {
 	border-color: #767676;
 }
 
+.task__newItem .icon__assign__date{
+	margin-right: 8px;
+}
+
 .task__item.Mui-selected {
 	background-color: var(--color-selected-background);
 	border: 2px solid var(--color-outline-input);
@@ -309,7 +313,7 @@ body::-webkit-scrollbar {
 	border-radius: 8px;
 	background-color: transparent;
 	font-size: 14px;
-	cursor: pointer;
+	cursor: auto;
 	overflow-y: hidden;
 	resize: none;
 	color: var(--color--text);
@@ -345,6 +349,7 @@ body::-webkit-scrollbar {
 
 .icon__assign__date.css-i4bv87-MuiSvgIcon-root {
 	font-size: 18px;
+	
 }
 
 .btnOption__box {

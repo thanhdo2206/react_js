@@ -1,4 +1,3 @@
-import { updateDropSectionService } from '../../services/projectService';
 import {
 	addSectionService,
 	archiveSectionService,
@@ -7,11 +6,7 @@ import {
 } from '../../services/sectionService';
 
 import { GET_ALL_SECTION_API } from '../types/SectionTypes';
-import {
-	getProjectApi,
-	updateDropSection,
-	updateDropSectionApi,
-} from './ProjectAction';
+import { getProjectApi, updateDropSectionApi } from './ProjectAction';
 
 export const getAllSectionApi = projectId => {
 	return async dispatch => {
@@ -29,7 +24,8 @@ export const addSectionApi = newSection => {
 		const { data } = await addSectionService(newSection);
 
 		// console.log(data);
-		//to update sectionOrder after add section
+		//to update sectionOrder after add section trên store
+		//trên database đã tự động thêm vào section order 
 		await dispatch(getProjectApi(data.projectId));
 
 		dispatch(getAllSectionApi(newSection.projectId));

@@ -21,12 +21,12 @@ export default function Content(props) {
 	};
 
 	return (
-		<Main open={open} drawerWidth={drawerWidth} sx={{ padding: '0px' }}>
+		<Main open={open} drawerwidth={drawerWidth} sx={{ padding: '0px' }}>
 			{/* header (toolbar) */}
 			<AppBar
 				position='fixed'
 				open={open}
-				drawerWidth={drawerWidth}
+				drawerwidth={drawerWidth}
 				sx={{ backgroundColor: '#fff', boxShadow: 'none', color: '#000' }}
 			>
 				<Toolbar sx={{ justifyContent: 'space-between' }}>

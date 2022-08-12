@@ -51,3 +51,60 @@ export const updateTaskService = async task => {
 		// return error.response;
 	}
 };
+
+export const updateTaskOrderInSectionService  = async data => {
+	try {
+		const respone = await requestApi({
+			method: 'put',
+			url: 'section',
+			data: { taskOrder: data.newTaskOrder, sectionId: data.sectionId },
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+		// return error.response;
+	}
+};
+
+export const completeTaskService = async taskId => {
+	try {
+		const respone = await requestApi({
+			method: 'put',
+			url: `task/5/${taskId}`,
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+	}
+};
+
+export const createTaskService = async taskCreate => {
+	try {
+		const respone = await requestApi({
+			method: 'post',
+			url: `task`,
+			data: taskCreate,
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+	}
+};
+
+export const updateTitleTaskService = async data => {
+	try {
+		const respone = await requestApi({
+			method: 'patch',
+			url: `task/1`,
+			data: {
+				taskId: data.taskId,
+				taskName: data.taskName,
+			},
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+		// return error.response;
+	}
+};
+

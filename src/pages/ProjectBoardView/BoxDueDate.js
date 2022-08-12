@@ -61,11 +61,10 @@ export default function BoxDueDate(props) {
 			>
 				<Box className='dueDate__board'>
 					<DueDateForm
-						dropDueDate={true}
 						startDate={valueStartDate}
 						dueDate={valueDueDate}
 						task={task}
-						handleCloseDueDate={handleClosePopover}
+						onClosePopover={handleClosePopover}
 					/>
 				</Box>
 			</Popover>

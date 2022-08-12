@@ -8,6 +8,8 @@ import TaskReducer from './reducers/TaskReducer';
 import authReducer from './reducers/authReducer';
 import toggleReducer from './reducers/toggleReducer';
 import reduxThunk from 'redux-thunk';
+import filterReducer from './reducers/filterReducer';
+
 
 const composedEnhances = composeWithDevTools(applyMiddleware(reduxThunk));
 
@@ -17,7 +19,8 @@ const rootReducer = combineReducers({
 	SectionReducer,
 	authReducer,
 	toggleReducer,
-	TaskReducer
+	TaskReducer,
+	filterReducer,
 });
 
 const store = createStore(

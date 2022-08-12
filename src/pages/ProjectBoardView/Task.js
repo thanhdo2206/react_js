@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { List, ListItem } from '@mui/material';
 import MoreOptionTask from './MoreOptionTask';
 import Box from '@mui/material/Box';
@@ -7,9 +7,12 @@ import CompleteTask from './CompleteTask';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import BoxAssignTask from './BoxAssignTask';
 import BoxDueDate from './BoxDueDate';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTitleTaskApi } from '../../redux/actions/TaskAction';
 
 export default function Task(props) {
 	const { task } = props;
+	const dispatch = useDispatch();
 
 	const [nameTask, setnameTask] = useState(task.taskName);
 
@@ -23,8 +26,21 @@ export default function Task(props) {
 		setnameTask(value);
 	};
 
-	const renameTask = () => {
-		inputNameTaskRef.current.click();
+	const renameTask = async () => {
+		await setIsDisplaySpanTaskname(false);
+		// console.log(inputNameTaskRef.current);
+		inputNameTaskRef.current.select();
+	};
+
+	const editTaskName =async () => {
+		await dispatch(updateTitleTaskApi(task._id, nameTask));
+		setIsDisplaySpanTaskname(true);
+	};
+
+	const handleEnter = event => {
+		if (event.keyCode == 13) {
+			event.target.blur();
+		}
 	};
 
 	return (
@@ -36,9 +52,9 @@ export default function Task(props) {
 					{isDisplaySpanTaskname ? (
 						<span
 							className='task__name'
-							onClick={() => {
-								setIsDisplaySpanTaskname(false);
-							}}
+							// onClick={() => {
+							// 	setIsDisplaySpanTaskname(false);
+							// }}
 						>
 							{task.taskName}
 						</span>
@@ -51,9 +67,9 @@ export default function Task(props) {
 							ref={inputNameTaskRef}
 							value={nameTask}
 							onChange={handleTNameTaskChange}
-							onClick={e => {
-								e.target.select();
-							}}
+							onBlur={editTaskName}
+							onKeyDown={handleEnter}
+
 						/>
 					)}
 				</Box>

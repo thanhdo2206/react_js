@@ -82,7 +82,7 @@ export default function BoxAssignTask(props) {
 					<AssigneeForm
 						memberArr={membersWorkspace}
 						onClickAssignee={handleAssigneeMember}
-						isDrop={true}
+						
 					/>
 				</Box>
 			</Popover>
