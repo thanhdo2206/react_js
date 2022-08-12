@@ -34,10 +34,22 @@ export default function PriorityBox(props) {
 	
 	const open = Boolean(anchorEl);
 	
-	const handleClickPriority = e => {
+	// const handleClickPriority = e => {
+	// 	const numberStatus = convertNumber(
+	// 		priorityArr,
+	// 		e.target.outerText.toLowerCase()
+	// 	);
+	// 	const taskUpdate = {
+	// 		...task,
+	// 		priorityValue: numberStatus.toString(),
+	// 	};
+	// 	handleClosePopover();
+	// 	dispatch(updatePriorityTaskApi(taskUpdate));
+	// };
+	const handleClickPriority = value => {
 		const numberStatus = convertNumber(
 			priorityArr,
-			e.target.outerText.toLowerCase()
+			value.toLowerCase()
 		);
 		const taskUpdate = {
 			...task,

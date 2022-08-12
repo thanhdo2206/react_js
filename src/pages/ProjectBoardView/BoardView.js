@@ -18,6 +18,7 @@ import {
 	getAllTaskInProjectApi,
 	getAllTaskOrderAction,
 } from '../../redux/actions/TaskAction';
+import ProjectHeader from '../ProjectListPage/projectHeader/ProjectHeader';
 
 export default function BoardView() {
 	const { sectionOrder } = useSelector(
@@ -90,26 +91,30 @@ export default function BoardView() {
 	};
 
 	return (
-		<Box component='div' className='board__columns'>
-			<Box component='div' className='board__container-columns'>
-				<Container
-					getChildPayload={index => sections[index]}
-					orientation='horizontal'
-					onDrop={onSectionDrop}
-					dragClass='section-ghost'
-					dropClass='section-ghost-drop'
-					dragHandleSelector='.column-drag-handle'
-					dropPlaceholder={{
-						animationDuration: 150,
-						showOnTop: true,
-						className: 'section-drop-preview',
-					}}
-				>
-					{renderSections()}
+		<>
+			<ProjectHeader />
 
-					<ButtonAddSection />
-				</Container>
+			<Box component='div' className='board__columns'>
+				<Box component='div' className='board__container-columns'>
+					<Container
+						getChildPayload={index => sections[index]}
+						orientation='horizontal'
+						onDrop={onSectionDrop}
+						dragClass='section-ghost'
+						dropClass='section-ghost-drop'
+						dragHandleSelector='.column-drag-handle'
+						dropPlaceholder={{
+							animationDuration: 150,
+							showOnTop: true,
+							className: 'section-drop-preview',
+						}}
+					>
+						{renderSections()}
+
+						<ButtonAddSection />
+					</Container>
+				</Box>
 			</Box>
-		</Box>
+		</>
 	);
 }

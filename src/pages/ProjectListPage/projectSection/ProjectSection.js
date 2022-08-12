@@ -39,7 +39,7 @@ const styles = {
 	},
 };
 
-const filterTaskList = (taskList, filterSelector) => {
+export const filterTaskList = (taskList, filterSelector) => {
 	const filterCustom = filterSelector.filterCustom;
 	const keyfilterSelector = Object.keys(filterCustom);
 	const valuefilterSelector = Object.values(filterCustom);
@@ -87,6 +87,8 @@ const filterTaskList = (taskList, filterSelector) => {
 			return (newTaskList = cloneTaskList);
 	}
 };
+
+
 export default function ProjectSection(props) {
 	const { section, indexSection, tasks, taskOrders, onTaskDrop } = props;
 	const dispatch = useDispatch();

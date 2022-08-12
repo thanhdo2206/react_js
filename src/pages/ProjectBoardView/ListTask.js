@@ -15,6 +15,7 @@ import {
 	updateSectionIdTaskDragApi,
 	updateTaskOrderInSectionApi,
 } from '../../redux/actions/TaskAction';
+import { filterTaskList } from '../ProjectListPage/projectSection/ProjectSection';
 
 export default function ListTask(props) {
 	const {
@@ -26,6 +27,8 @@ export default function ListTask(props) {
 	} = props;
 
 	const dispatch = useDispatch();
+	const filterSelector = useSelector(state => state.filterReducer);
+
 	const currentUser = useSelector(state => state.authReducer.currentUser);
 
 	const arrTaskInProject = useSelector(state => state.TaskReducer.arrTask);
@@ -52,9 +55,10 @@ export default function ListTask(props) {
 			? mapOrder(arrTaskInSection, taskOrderInSection.taskOrder, '_id')
 			: [];
 
+	const newTaskList = filterTaskList(listTask, filterSelector);
+
 	const handleCreateTask = nameTask => {
 		if (nameTask === '') {
-			//tắt form add task
 			closeNewTaskForm();
 			return;
 		}
@@ -93,7 +97,7 @@ export default function ListTask(props) {
 	};
 
 	const renderListTask = () => {
-		return listTask.map((task, index) => {
+		return newTaskList.map((task, index) => {
 			return (
 				<Draggable key={task._id}>
 					<Task task={task} />
