@@ -102,7 +102,7 @@ export default function TaskDetail(props) {
 				onChange={onChangeTitleTask}
 			/>
 			<Box className='taskDetail__box--body'>
-				<ClickAwayListener onClickAway={handleClickAwayAssignee}>
+				{/* <ClickAwayListener onClickAway={handleClickAwayAssignee}> */}
 					<Box className='taskDetail__box--content taskDetail__box--assignee'>
 						<Typography className='taskDetail__typo taskDetail__typo--assignee'>
 							Assignee
@@ -111,8 +111,8 @@ export default function TaskDetail(props) {
 							<AssigneeBox username={username} task={task} />
 						</Box>
 					</Box>
-				</ClickAwayListener>
-				<ClickAwayListener onClickAway={handleClickAwayAssignee}>
+				{/* </ClickAwayListener> */}
+				{/* <ClickAwayListener > */}
 					<Box className='taskDetail__box--content taskDetail__box--dueDate'>
 						<Typography className='taskDetail__typo taskDetail__typo--dueDate'>
 							Due date
@@ -125,7 +125,7 @@ export default function TaskDetail(props) {
 							/>
 						</Box>
 					</Box>
-				</ClickAwayListener>
+				{/* </ClickAwayListener> */}
 				<Box className='taskDetail__box--content taskDetail__box--createdOn'>
 					<Typography className='taskDetail__typo'>Created on</Typography>
 					<Box className='taskDetail__box--form taskDetail__box--formCreatedOn'>
@@ -134,7 +134,7 @@ export default function TaskDetail(props) {
 						</Typography>
 					</Box>
 				</Box>
-				<ClickAwayListener>
+				{/* <ClickAwayListener> */}
 					<Box className='taskDetail__box--content taskDetail__box--dueDate'>
 						<Typography className='taskDetail__typo taskDetail__typo--dueDate'>
 							Priority
@@ -143,7 +143,7 @@ export default function TaskDetail(props) {
 							<PriorityBox priorityValue={priorityValue} task={task} />
 						</Box>
 					</Box>
-				</ClickAwayListener>
+				{/* </ClickAwayListener> */}
 				<Box className='taskDetail__box--content taskDetail__box--description'>
 					<Box className='taskDetail__box--typo'>
 						<Typography className='taskDetail__typo'>Description</Typography>{' '}

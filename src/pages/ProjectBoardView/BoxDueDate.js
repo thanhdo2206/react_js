@@ -1,4 +1,4 @@
-import { Box, ClickAwayListener, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { TooltipCustomize } from '../../components/ToolTip/ToolTip';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';

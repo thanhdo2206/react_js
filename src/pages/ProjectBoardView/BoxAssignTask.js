@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TooltipCustomize } from '../../components/ToolTip/ToolTip';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { Box, ClickAwayListener } from '@mui/material';
+import { Box } from '@mui/material';
 import AssigneeForm from '../../components/assignee/AssigneeForm';
 import AvatarAssignee from '../../components/assignee/AvatarAssignee';
 import { useSelector, useDispatch } from 'react-redux';

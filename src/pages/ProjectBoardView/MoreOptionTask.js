@@ -8,9 +8,8 @@ import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 
-
 export default function MoreOptionTask(props) {
-	const { renameTask } = props;
+	const { renameTask, toggleDrawer } = props;
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 
@@ -26,6 +25,13 @@ export default function MoreOptionTask(props) {
 		handleCloseMore();
 		renameTask();
 	};
+
+	const openDetailTask = ()=>{
+		toggleDrawer();
+		handleCloseMore();
+
+
+	}
 
 	return (
 		<Box className='btnOption__box' display={open ? 'block' : 'none'}>
@@ -55,14 +61,13 @@ export default function MoreOptionTask(props) {
 					Edit task name
 				</MenuItem>
 
-				<MenuItem className='menu__option-item'>
+				<MenuItem className='menu__option-item' onClick={openDetailTask}>
 					<VisibilityOutlinedIcon className='icon__option' />
 					View details
 				</MenuItem>
 
 				<MenuItem className='menu__option-item delete__section-task'>
 					<Inventory2OutlinedIcon className='icon__option' />
-
 					Archive task
 				</MenuItem>
 			</Menu>
