@@ -29,7 +29,6 @@ export const assignTaskService = async (taskUpdate, taskUpdateId) => {
 
 export const updateTaskService = async task => {
 	try {
-		
 		const taskUpdate = {
 			taskName: task.taskName,
 			description: task.description,
@@ -39,11 +38,11 @@ export const updateTaskService = async task => {
 			priorityValue: task.priorityValue,
 			sectionId: task.sectionId,
 		};
-		
+
 		const respone = await requestApi({
 			method: 'put',
 			url: `task/${task._id}`,
-			data: {...taskUpdate},
+			data: { ...taskUpdate },
 		});
 		return respone;
 	} catch (error) {
@@ -52,7 +51,7 @@ export const updateTaskService = async task => {
 	}
 };
 
-export const updateTaskOrderInSectionService  = async data => {
+export const updateTaskOrderInSectionService = async data => {
 	try {
 		const respone = await requestApi({
 			method: 'put',
@@ -108,3 +107,17 @@ export const updateTitleTaskService = async data => {
 	}
 };
 
+export const archiveTaskService = async task => {
+	try {
+		const respone = await requestApi({
+			method: 'patch',
+			url: `task/2`,
+			data: {
+				taskId: task._id,
+			},
+		});
+		return respone;
+	} catch (error) {
+		console.log(error.response);
+	}
+};

@@ -36,6 +36,7 @@ export const updateTitleSectionApi = dataSection => {
 	return async dispatch => {
 		const { data } = await updateTitleSectionService(dataSection);
 
+		
 		dispatch(getAllSectionApi(data.projectId));
 	};
 };

@@ -30,7 +30,7 @@ export const addSectionService = async newSection => {
 export const updateTitleSectionService = async dataSection =>{
 	try {
 		const respone = await requestApi({
-			method: 'put',
+			method: 'patch',
 			url: 'section/3',
 			data : {...dataSection}
 		});

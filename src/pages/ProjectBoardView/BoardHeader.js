@@ -35,6 +35,8 @@ export default function BoardHeader(props) {
 			sectionId: section._id,
 			sectionName: titleSectionEdit,
 		};
+		
+
 
 		dispatch(updateTitleSectionApi(dataSection));
 	};
@@ -64,9 +66,9 @@ export default function BoardHeader(props) {
 						e.target.select();
 					}}
 					onChange={handleTitleChange}
-					onMouseDown={e => {
-						e.preventDefault();
-					}}
+					// onMouseDown={e => {
+					// 	e.preventDefault();
+					// }}
 					ref={titleSectionRef}
 					value={titleSection}
 				/>
