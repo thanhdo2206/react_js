@@ -14,9 +14,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(async req => {
 	const authTokens = storage.getValueStorage('auth');
 	const accessToken = authTokens.accessToken
-	
+	// console.log('accessToken before', accessToken)
 	if (accessToken) {
+		// console.log('accessToken', accessToken)
 		const decodedToken = jwtDecode(accessToken);
+		// console.log('decoded', decodedToken.exp*1000 < new Date().getTime())
 		if (decodedToken.exp * 1000 < new Date().getTime()) {
 			const respone = await axios.post(
 				`${process.env.REACT_APP_BASE_URL_API}auth/refresh`,
@@ -24,6 +26,7 @@ axiosInstance.interceptors.request.use(async req => {
 					refreshToken: authTokens?.refreshToken,
 				}
 			);
+			// console.log('axios', respone.data);
 			storage.storeValueStorage('auth', respone.data);
 			req.headers.token = `babers ${respone.data.accessToken}`;
 			return req

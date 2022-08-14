@@ -20,7 +20,11 @@ export default function DueDateBox(props) {
 
 	return (
 		<>
-			<Box onClick={handleOpenPopover} className='dueDate__block--show'>
+			<Box
+				onClick={handleOpenPopover}
+				className='dueDate__block--show'
+				sx={{ display: 'flex', alignItems: 'center' }}
+			>
 				{splitStartDate || splitDueDate ? (
 					<Typography className='dueDate__typography--show'>
 						{showDate(splitStartDate, splitDueDate)}
@@ -28,9 +32,7 @@ export default function DueDateBox(props) {
 				) : (
 					<Box className='DueDateBox__box'>
 						<CalendarTodayIcon className='DueDateBox__icon' />
-						<Typography className='DueDateBox__typo'>
-							No due date
-						</Typography>
+						<Typography className='DueDateBox__typo'>No due date</Typography>
 					</Box>
 				)}
 			</Box>

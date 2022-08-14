@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Checkbox, Grid, Typography } from '@mui/material';
 import ButtonProjectList from '../../../components/ButtonProjectList/ButtonProjectList';
@@ -16,6 +16,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { TooltipCustomize } from '../../../components/ToolTip/ToolTip';
 import UnarchiveOutlinedIcon from '@mui/icons-material/UnarchiveOutlined';
 import { archiveTaskApi } from '../../../redux/actions/TaskAction';
+import { ProgressListener } from '../../../components/ProgressTest/Progress';
 
 
 const styles = {
@@ -58,15 +59,15 @@ export default function ProjectTaskArchive() {
 		}
 	}
 
-	const unarchiveTask = (task)=>{
-		dispatch(archiveTaskApi(task));
-	}
+	const unarchiveTask =async task => {
+		ProgressListener.emit('start');
 
-	
+		await dispatch(archiveTaskApi(task));
+		ProgressListener.emit('stop');
+
+	};
 
 	const render = () => {
-		
-
 		if (arrTaskArchiveInSectionUnarchive.length > 0) {
 			return arrTaskArchiveInSectionUnarchive.map((task, index) => {
 				const {
@@ -83,17 +84,29 @@ export default function ProjectTaskArchive() {
 				const valueStartDate = startDate !== null ? startDate : '';
 				const valueDueDate = dueDate !== null ? dueDate : '';
 				return (
-					<>
-						<Grid key={_id} container className='taskName__container'>
+					<Box key={_id}>
+						<Grid
+							container
+							className='taskName__container'
+							sx={{ marginLeft: '20px' }}
+						>
 							{/* name task */}
-							<Grid item xs={4} style={styles.task} className='taskName__block'>
-								<Box className='taskName__block--input'>
-									<Box className='row-drag-handle'>
+							<Grid
+								item
+								xs={4}
+								style={{ ...styles.task, display: 'flex', alignItems: 'center' }}
+								className='taskName__block'
+							>
+								<Box
+									className='taskName__block--input'
+									sx={{ display: 'flex', alignItems: 'center' }}
+								>
+									{/* <Box className='row-drag-handle'>
 										<ButtonProjectList
 											icon={<DragIndicatorSharpIcon style={styles.icon} />}
 											id='title__icon--hover'
 										/>
-									</Box>
+									</Box> */}
 									<Checkbox
 										label='CheckCircleOutlineIcon'
 										icon={<CheckCircleOutlineIcon sx={{ width: '18px' }} />}
@@ -110,11 +123,9 @@ export default function ProjectTaskArchive() {
 										}}
 										checked={taskStatus}
 									/>
-
 									<span>{taskName}</span>
 									<Box className='css__focus'></Box>
 								</Box>
-
 								<Box
 									className='taskName__button--viewDetails'
 									onClick={() => {
@@ -131,7 +142,12 @@ export default function ProjectTaskArchive() {
 							<Grid
 								item
 								xs={2}
-								style={{ ...styles.task }}
+								style={{
+									...styles.task,
+									padding: '7px',
+									display: 'flex',
+									alignItems: 'center',
+								}}
 								className='dropMenu--assignee'
 							>
 								{/* <AssigneeBox username={username} task={task} /> */}
@@ -161,6 +177,7 @@ export default function ProjectTaskArchive() {
 								align='right'
 								style={styles.task}
 								className='dueDate__calendar'
+								sx={{ display: 'flex', alignItems: 'center' }}
 							>
 								{valueStartDate || valueDueDate ? (
 									<Typography className='dueDate__typography--show'>
@@ -193,8 +210,7 @@ export default function ProjectTaskArchive() {
 								<PriorityBox priorityValue={priorityValue} task={task} />
 							</Grid>
 						</Grid>
-						
-					</>
+					</Box>
 				);
 			});
 		}

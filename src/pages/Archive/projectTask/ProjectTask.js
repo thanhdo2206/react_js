@@ -109,15 +109,15 @@ export default function ProjectTask(props) {
 	};
 
 	return (
-		<Grid container className='taskName__container'>
+		<Grid container className='taskName__container' sx={{marginLeft: '20px '}}>
 			<Grid item xs={4} style={styles.task} className='taskName__block'>
 				<Box className='taskName__block--input'>
-					<Box className='row-drag-handle'>
+					{/* <Box className='row-drag-handle'>
 						<ButtonProjectList
 							icon={<DragIndicatorSharpIcon style={styles.icon} />}
 							id='title__icon--hover'
 						/>
-					</Box>
+					</Box> */}
 					<Checkbox
 						label='CheckCircleOutlineIcon'
 						icon={<CheckCircleOutlineIcon sx={{ width: '18px' }} />}
@@ -194,7 +194,7 @@ export default function ProjectTask(props) {
 				item
 				xs={2}
 				style={{ ...styles.task, borderRight: 'none' }}
-				className='dropMenu--priority'
+				// className='dropMenu--priority'
 			>
 				<PriorityBox priorityValue={priorityValue} task={task} />
 			</Grid>

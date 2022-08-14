@@ -70,10 +70,10 @@ export default function PriorityBox(props) {
 					<DisplayStatus status={priorityValue} arr={priorityArr} />
 				</Grid>
 				<Grid item xs={2}>
-					<ExpandMoreIcon style={styles.icon} />
+					{/* <ExpandMoreIcon style={styles.icon} /> */}
 				</Grid>
 			</Grid>
-			<Popover
+			{/* <Popover
 				id={open ? 'assignTask__box' : undefined}
 				open={open}
 				anchorEl={anchorEl}
@@ -92,7 +92,7 @@ export default function PriorityBox(props) {
 					menu={priorityMenu}
 					onClickPriorityItem={handleClickPriority}
 				/>
-			</Popover>
+			</Popover> */}
 		</>
 	);
 }

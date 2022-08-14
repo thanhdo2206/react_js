@@ -155,7 +155,7 @@ export default function ProjectTable() {
 				</Grid>
 			</Box>
 
-			<Box sx={styles.bodyTable}>
+			<Box sx={{ ...styles.bodyTable, paddingTop: '4px' }}>
 				<ProjectTaskArchive />
 				<Container
 					onDrop={handleSectionDrop}

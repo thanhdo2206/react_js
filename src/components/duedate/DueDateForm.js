@@ -9,9 +9,10 @@ import './dueDateForm.css';
 import { convertDateFromDataBase, showDateInDateInput } from '../../utils/date';
 import ButtonProjectList from '../../components/ButtonProjectList/ButtonProjectList';
 import { setDateTaskApi } from '../../redux/actions/TaskAction';
+import { ProgressListener } from '../ProgressTest/Progress';
 
 export default function DueDateForm(props) {
-	const {startDate, dueDate, task,onClosePopover } = props;
+	const { startDate, dueDate, task, onClosePopover } = props;
 
 	const dispatch = useDispatch();
 
@@ -50,7 +51,7 @@ export default function DueDateForm(props) {
 		setDueDateCalendar('');
 	};
 
-	const handleSubmitDate = () => {
+	const handleSubmitDate = async () => {
 		let taskUpdate = {
 			...task,
 			startDate: startDateCalendar,
@@ -64,12 +65,11 @@ export default function DueDateForm(props) {
 				dueDate: startDateCalendar,
 			};
 		}
-
-		dispatch(setDateTaskApi(taskUpdate));
 		onClosePopover();
+		ProgressListener.emit('start');
+		await dispatch(setDateTaskApi(taskUpdate));
+		ProgressListener.emit('stop');
 	};
-
-	
 
 	return (
 		<Box className='dueDate__block'>
@@ -83,7 +83,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (isFocusDueDate) {
+						if (!isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';
@@ -98,7 +98,7 @@ export default function DueDateForm(props) {
 						readOnly: true,
 					}}
 					inputRef={input => {
-						if (!isFocusDueDate) {
+						if (isFocusDueDate) {
 							return input && input.focus();
 						}
 						return '';

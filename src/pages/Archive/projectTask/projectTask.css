@@ -280,6 +280,8 @@
 /*due date*/
 .dueDate__calendar {
 	position: relative;
+	display: flex;
+	align-items: center;
 }
 
 .dueDate__block--show {

@@ -2,11 +2,14 @@ import {
 	addSectionService,
 	archiveSectionService,
 	getAllSectionService,
+	UnarchiveSectionService,
 	updateTitleSectionService,
 } from '../../services/sectionService';
 
 import { GET_ALL_SECTION_API } from '../types/SectionTypes';
 import { getProjectApi, updateDropSectionApi } from './ProjectAction';
+import { getAllTaskInProjectApi } from './TaskAction';
+
 
 export const getAllSectionApi = projectId => {
 	return async dispatch => {
@@ -25,7 +28,7 @@ export const addSectionApi = newSection => {
 
 		// console.log(data);
 		//to update sectionOrder after add section trên store
-		//trên database đã tự động thêm vào section order 
+		//trên database đã tự động thêm vào section order
 		await dispatch(getProjectApi(data.projectId));
 
 		dispatch(getAllSectionApi(newSection.projectId));
@@ -36,8 +39,7 @@ export const updateTitleSectionApi = dataSection => {
 	return async dispatch => {
 		const { data } = await updateTitleSectionService(dataSection);
 
-		
-		dispatch(getAllSectionApi(data.projectId));
+		await dispatch(getAllSectionApi(data.projectId));
 	};
 };
 
@@ -49,10 +51,14 @@ export const addSectionLeftRightApi = (
 	return async dispatch => {
 		const newSectionOrder = [...sectionOrder];
 
+		console.log('section order after', newSectionOrder)
 		const { data } = await addSectionService(newSection);
 
+		console.log(data)
+		console.log('index', indexAddSection);
 		newSectionOrder.splice(indexAddSection, 0, data._id);
-
+		console.log('section order before', newSectionOrder)
+		
 		//to update sectionOrder after add section left right
 		await dispatch(updateDropSectionApi(newSectionOrder, data.projectId));
 
@@ -63,6 +69,15 @@ export const addSectionLeftRightApi = (
 export const archiveSectionApi = sectionId => {
 	return async dispatch => {
 		const { data } = await archiveSectionService(sectionId);
-		dispatch(getAllSectionApi(data.projectId));
+		await dispatch(getAllSectionApi(data.projectId));
+		dispatch(getAllTaskInProjectApi(data.projectId));
+	};
+};
+
+export const unArchiveSectionApi = sectionId => {
+	return async dispatch => {
+		const { data } = await UnarchiveSectionService(sectionId);
+		await dispatch(getAllSectionApi(data.projectId));
+		dispatch(getAllTaskInProjectApi(data.projectId));
 	};
 };

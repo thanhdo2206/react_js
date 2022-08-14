@@ -13,6 +13,7 @@ import { addSectionLeftRightAction } from '../../../redux/actions/ProjectAction'
 import { addSectionLeftRightApi } from '../../../redux/actions/SectionAction';
 import ProjectAddTaskForm from '../projectTask/ProjectAddTaskForm';
 import { filterDate } from '../../../utils/date';
+import { ProgressListener } from '../../../components/ProgressTest/Progress';
 
 const styles = {
 	textTitle: {
@@ -59,9 +60,9 @@ export const filterTaskList = (taskList, filterSelector) => {
 	let newTaskList = cloneTaskList.length
 		? cloneTaskList.filter(item => item[currentKeyfilterSelector] !== null)
 		: [];
-		// console.log('current value', currentValue[0])
-		// console.log('currentKeyfilterSelector', currentKeyfilterSelector)
-		// console.log('task', newTaskList)
+	// console.log('current value', currentValue[0])
+	// console.log('currentKeyfilterSelector', currentKeyfilterSelector)
+	// console.log('task', newTaskList)
 	switch (currentKeyfilterSelector) {
 		case 'assigneTo':
 			return (newTaskList = currentValue[0]
@@ -71,8 +72,12 @@ export const filterTaskList = (taskList, filterSelector) => {
 				: taskList);
 		case 'createdBy':
 			return (newTaskList = currentValue[0]
-				? newTaskList.filter(
-						item => item[currentKeyfilterSelector] ? item[currentKeyfilterSelector]._id === currentValue[0] ? true : false :false
+				? newTaskList.filter(item =>
+						item[currentKeyfilterSelector]
+							? item[currentKeyfilterSelector]._id === currentValue[0]
+								? true
+								: false
+							: false
 				  )
 				: taskList);
 		case 'priorityValue':
@@ -87,7 +92,6 @@ export const filterTaskList = (taskList, filterSelector) => {
 			return (newTaskList = cloneTaskList);
 	}
 };
-
 
 export default function ProjectSection(props) {
 	const { section, indexSection, tasks, taskOrders, onTaskDrop } = props;
@@ -109,12 +113,6 @@ export default function ProjectSection(props) {
 	const taskInSection = tasks
 		? tasks.filter(item => item.sectionId === section._id)
 		: [];
-
-	// const newTaskInSection = taskInSection.length
-	// 	? taskInSection.filter(item => item.sectionId === '""62f3555ae9a466911d545ae5""')
-	// 	: [];
-
-	// const newTaskInSection = taskInSection.length ? taskInSection[0].assigneTo._id : ''
 
 	const taskOrderInSection = taskOrders
 		? taskOrders.find(item => item.sectionId === section._id)
@@ -159,7 +157,7 @@ export default function ProjectSection(props) {
 		setCheckAboveBelow(1);
 	};
 
-	const handleAddSectionSubmit = e => {
+	const handleAddSectionSubmit = async e => {
 		const titleSection = e.target.value;
 
 		const sectionNameInput = !titleSection.trim()
@@ -174,10 +172,11 @@ export default function ProjectSection(props) {
 
 		let indexAddSection = indexSection + checkAboveBelow;
 
-		
-		dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
 		setAddSectionAbove(false);
 		setAddSectionBelow(false);
+		ProgressListener.emit('start');
+		await dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
+		ProgressListener.emit('stop');
 
 		e.target.value = '';
 	};
@@ -251,12 +250,12 @@ export default function ProjectSection(props) {
 					</Box>
 					<Box
 						className='addTask__block--below'
-						onClick={handleClickAddTaskBelow}
-						sx={styles.addTask}
+						// onClick={handleClickAddTaskBelow}
+						sx={{...styles.addTask, marginLeft: '20px'}}
 					>
-						<Typography className='addTask__typography--below'>
+						{/* <Typography className='addTask__typography--below'>
 							Add task...
-						</Typography>
+						</Typography> */}
 					</Box>
 				</Box>
 			</Box>

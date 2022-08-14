@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, TextField, Typography } from '@mui/material';
 import { Container, Draggable } from 'react-smooth-dnd';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ProjectTask from '../projectTask/ProjectTask';
@@ -9,10 +9,10 @@ import './projectSection.css';
 import { mapOrder } from '../../../utils/sort';
 import ProjectSectionForm from './ProjectSectionForm';
 import ProjectAddSectionForm from './ProjectAddSectionForm';
-import { addSectionLeftRightAction } from '../../../redux/actions/ProjectAction';
 import { addSectionLeftRightApi } from '../../../redux/actions/SectionAction';
 import ProjectAddTaskForm from '../projectTask/ProjectAddTaskForm';
 import { filterDate } from '../../../utils/date';
+import { ProgressListener } from '../../../components/ProgressTest/Progress';
 
 const styles = {
 	textTitle: {
@@ -48,7 +48,6 @@ export const filterTaskList = (taskList, filterSelector) => {
 	const currentKeyfilterSelector = keyfilterSelector[indexCurrentValue];
 
 	const currentfilterStatus = filterSelector.filterStatus;
-	// console.log(currentKeyfilterSelector, currentValue[0], valuefilterSelector);
 	let cloneTaskList = taskList;
 	cloneTaskList = cloneTaskList.length
 		? currentfilterStatus !== 2
@@ -59,9 +58,7 @@ export const filterTaskList = (taskList, filterSelector) => {
 	let newTaskList = cloneTaskList.length
 		? cloneTaskList.filter(item => item[currentKeyfilterSelector] !== null)
 		: [];
-	// console.log('current value', currentValue[0])
-	// console.log('currentKeyfilterSelector', currentKeyfilterSelector)
-	// console.log('task', newTaskList)
+
 	switch (currentKeyfilterSelector) {
 		case 'assigneTo':
 			return (newTaskList = currentValue[0]
@@ -113,12 +110,6 @@ export default function ProjectSection(props) {
 		? tasks.filter(item => item.sectionId === section._id)
 		: [];
 
-	// const newTaskInSection = taskInSection.length
-	// 	? taskInSection.filter(item => item.sectionId === '""62f3555ae9a466911d545ae5""')
-	// 	: [];
-
-	// const newTaskInSection = taskInSection.length ? taskInSection[0].assigneTo._id : ''
-
 	const taskOrderInSection = taskOrders
 		? taskOrders.find(item => item.sectionId === section._id)
 			? taskOrders.find(item => item.sectionId === section._id).taskOrder
@@ -168,7 +159,7 @@ export default function ProjectSection(props) {
 		setCheckAboveBelow(1);
 	};
 
-	const handleAddSectionSubmit = e => {
+	const handleAddSectionSubmit = async e => {
 		const titleSection = e.target.value;
 
 		const sectionNameInput = !titleSection.trim()
@@ -182,9 +173,14 @@ export default function ProjectSection(props) {
 		};
 
 		let indexAddSection = indexSection + checkAboveBelow;
-
+		e.target.value = sectionNameInput;
+		
 		console.log('indexAddSection', indexAddSection);
-		dispatch(addSectionLeftRightApi(newSection, sectionOrder, indexAddSection));
+		ProgressListener.emit('start');
+		await dispatch(
+			addSectionLeftRightApi(newSection, sectionOrder, indexAddSection)
+		);
+		ProgressListener.emit('stop');
 		setAddSectionAbove(false);
 		setAddSectionBelow(false);
 

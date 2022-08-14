@@ -38,8 +38,8 @@ export default function ProjectAddSectionForm(props) {
 	const { isDisplay, onSubmit } = props;
 
 	const handleKeyPress = value => {
-		if(value.key === 'Enter') {
-			value.target.blur()
+		if (value.key === 'Enter') {
+			value.target.blur();
 		}
 	};
 
@@ -61,7 +61,7 @@ export default function ProjectAddSectionForm(props) {
 					width: '175px',
 					'& .MuiOutlinedInput-root:hover': {
 						'& > fieldset': {
-							borderColor: 'white',
+							borderColor: 'gray',
 						},
 					},
 					'& .MuiOutlinedInput-root.Mui-focused': {
@@ -69,11 +69,28 @@ export default function ProjectAddSectionForm(props) {
 							borderColor: '#0057B7',
 						},
 					},
+					'& .MuiOutlinedInput-root': {
+						'& > fieldset': {
+							borderColor: 'white',
+							borderRadius: '10px',
+						},
+					},
+					'&': {
+						input: {
+							padding: '10px',
+							fontWeight: 'bold',
+							fontSize: '15px',
+						},
+					},
+					borderColor: 'white',
 				}}
 				placeholder={'Write a section name'}
 				className='Box__input--addTask'
 				onKeyPress={handleKeyPress}
 				inputRef={input => input && input.focus()}
+				InputProps={{
+					readOnly: true,
+				}}
 			/>
 			<Box sx={{ position: 'relative' }}>
 				<ButtonProjectList

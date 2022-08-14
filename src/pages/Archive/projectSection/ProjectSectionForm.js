@@ -17,10 +17,14 @@ import {
 } from '../../../constants/constants';
 import { deleteSectionAction } from '../../../redux/actions/ProjectAction';
 import ConfirmModal from '../../../components/Modal/ConfirmModal';
-import { archiveSectionApi, updateTitleSectionApi } from '../../../redux/actions/SectionAction';
+import {
+	archiveSectionApi,
+	unArchiveSectionApi,
+	updateTitleSectionApi,
+} from '../../../redux/actions/SectionAction';
 import ButtonProjectList from '../../../components/ButtonProjectList/ButtonProjectList';
 import UnarchiveOutlinedIcon from '@mui/icons-material/UnarchiveOutlined';
-
+import { ProgressListener } from '../../../components/ProgressTest/Progress';
 
 const styles = {
 	textTitle: {
@@ -58,25 +62,28 @@ export default function ProjectSectionForm(props) {
 	} = props;
 
 	const [isShowMenuSection, setIsShowMenuSection] = useState(false);
-	const [isShowModalDelete, setShowModalDelete] = useState(false);
+	const [isShowModalUnarchiveSection, setShowModalUnarchiveSection] =
+		useState(false);
 
 	const dispatch = useDispatch();
 	const searchInput = useRef(null);
 
 	const toggleModal = () => {
-		setShowModalDelete(!isShowModalDelete);
+		setShowModalUnarchiveSection(!isShowModalUnarchiveSection);
 	};
 
 	const handleShowMenuSection = () => {
 		setIsShowMenuSection(!isShowMenuSection);
 	};
 
-	const handleModalArchiveSection = type => {
+	const handleModalUnArchiveSection = async type => {
 		if (type === MODAL_ACTION_CONFIRM) {
-			dispatch(archiveSectionApi(sectionId))
+			ProgressListener.emit('start');
+			await dispatch(unArchiveSectionApi(sectionId));
+			ProgressListener.emit('stop');
 		}
 		setIsShowMenuSection(false);
-		setShowModalDelete(false);
+		setShowModalUnarchiveSection(false);
 	};
 
 	const handleEditTitleSection = e => {
@@ -100,8 +107,8 @@ export default function ProjectSectionForm(props) {
 	};
 
 	return (
-		<Grid item className='title__content '>
-			<Box
+		<Grid item className='title__content ' sx={{ marginLeft: '20px' }}>
+			{/* <Box
 				className='row-drag-handle'
 				onMouseDown={onMouseDown}
 				onMouseUp={onMouseUp}
@@ -110,7 +117,7 @@ export default function ProjectSectionForm(props) {
 					icon={<DragIndicatorSharpIcon style={styles.icon} />}
 					id='title__icon--hover'
 				/>
-			</Box>
+			</Box> */}
 			<ButtonProjectList
 				icon={
 					isExpand ? (
@@ -128,7 +135,7 @@ export default function ProjectSectionForm(props) {
 					width: '175px',
 					'& .MuiOutlinedInput-root:hover': {
 						'& > fieldset': {
-							borderColor: 'white',
+							borderColor: 'gray',
 						},
 					},
 					'& .MuiOutlinedInput-root.Mui-focused': {
@@ -136,21 +143,38 @@ export default function ProjectSectionForm(props) {
 							borderColor: '#0057B7',
 						},
 					},
+					'& .MuiOutlinedInput-root': {
+						'& > fieldset': {
+							borderColor: 'white',
+							borderRadius: '10px',
+						},
+					},
+					'&': {
+						input: {
+							padding: '10px',
+							fontWeight: 'bold',
+							fontSize: '15px',
+						},
+					},
+					borderColor: 'white',
 				}}
 				placeholder={'Write a section name'}
 				className='Box__input--addTask'
 				defaultValue={sectionName}
 				onKeyPress={handleKeyPress}
 				inputRef={searchInput}
+				InputProps={{
+					readOnly: true,
+				}}
 			/>
-			<Box sx={{ position: 'relative' }}>
+			{/* <Box sx={{ position: 'relative' }}>
 				<ButtonProjectList
 					icon={<AddIcon style={styles.icon} />}
 					id='title__button--addTask'
 					onClickButton={onClickAddTaskAbove}
 				/>
 				<Typography id='addTask__span--hover'>Add Task</Typography>
-			</Box>
+			</Box> */}
 			<Box sx={{ position: 'relative' }}>
 				<ButtonProjectList
 					icon={<MoreHorizIcon style={styles.icon} />}
@@ -182,20 +206,22 @@ export default function ProjectSectionForm(props) {
 						/>
 					</Box> */}
 					<ButtonProjectList
-						icon={<UnarchiveOutlinedIcon style={styles.icon} id='button-delSection' />}
+						icon={
+							<UnarchiveOutlinedIcon style={styles.icon} id='button-delSection' />
+						}
 						id='dropItem__button--delSection'
 						text='Unarchive Section'
 						onClickButton={toggleModal}
 					/>
 					<ConfirmModal
-						show={isShowModalDelete}
+						show={isShowModalUnarchiveSection}
 						title='Unarchive this section'
 						content={
 							<span>
 								Are you sure you want to unarchive this section <b>{sectionName}</b>?
 							</span>
 						}
-						onAction={handleModalArchiveSection}
+						onAction={handleModalUnArchiveSection}
 						nameBtnConfirm='Unarchive section'
 					/>
 				</Box>
